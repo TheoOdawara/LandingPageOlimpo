@@ -1,0 +1,55 @@
+:root{
+	--brand-blue: #032137;
+	--white: #ffffff;
+	--container-max: 980px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;background:#f7f8fb;color:var(--brand-blue)}
+
+/* center page content */
+.menu-container{display:flex;justify-content:center;padding:24px}
+
+/* Header block */
+.site-header{
+	position:relative;
+	display:flex;
+	align-items:center;
+	justify-content:flex-start;
+	gap:16px;
+	width:100%;
+	max-width:var(--container-max);
+	background:var(--brand-blue);
+	padding:0 24px; /* vertical centered via fixed height */
+	border-radius:10px;
+}
+
+/* decorative white blocks on the left (replicate Figma placeholders) */
+.logo-decor{position:absolute;left:0;top:0;width:160px;height:116px;pointer-events:none}
+.logo-block{position:absolute;background:var(--white);border-radius:3px}
+/* block A: width:65.26px; height:17.43px; left:13.74px; top:12.04px */
+.logo-block.block-a{width:65.26px;height:17.43px;left:13.74px;top:12.04px}
+/* block B: width:25.80px; height:37.23px; left:0px; top:0px */
+.logo-block.block-b{width:25.8px;height:37.23px;left:0;top:0}
+
+.brand{display:inline-flex;align-items:center;gap:12px;margin-left:88px;text-decoration:none}
+.brand-logo{width:79px;height:auto;display:block}
+
+.header-center{flex:1;display:flex;justify-content:center}
+
+.cta{background:var(--white);padding:5px 15px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.08)}
+.cta-text{color:var(--brand-blue);font-family:Poppins, Arial;font-size:10px;font-weight:600;line-height:24px;word-wrap:break-word}
+
+/* Responsive adjustments */
+@media (max-width:640px){
+	.site-header{padding:0 12px;border-radius:8px}
+	.logo-decor{width:120px;height:96px}
+	.logo-block.block-a{left:12px;top:10px;width:52px;height:14px}
+	.logo-block.block-b{left:0;top:0;width:22px;height:32px}
+	.brand{margin-left:72px}
+	.brand-logo{width:56px}
+	.cta{padding:8px 12px}
+	.cta-text{font-size:13px}
+}
+
