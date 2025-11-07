@@ -1,27 +1,182 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Menu — Código Figma Exato</title>
-  <!-- Fonte Poppins (opcional, segue o protótipo) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎄 Natal Pago pelo Sol - Olimpo Energia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>body{margin:0;background:#f7f8fb;font-family:Poppins,Arial}</style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="modal.css">
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
+  <div class="Background">
+    <section class="lp-section lp-menu">
+      <div data-layer="Rectangle 10" class="Rectangle10">
+        <div data-svg-wrapper data-layer="Vector" class="Vector">
+          <img src="images/LOGO.svg" alt="Logo Olimpo">
+        </div>
+        <div data-layer="CTA" class="cta-button" onclick="natalModal.open()">
+          <div data-layer="Quero meu Natal pago pelo sol!" class="QueroMeuNatalPagoPeloSol">☀️ Quero meu Natal pago pelo sol!</div>
+        </div>
+      </div>
+    </section>
+    <section class="lp-section lp-headline">
+      <div data-layer="Instale seu sistema de energia solar agora e ganhe" class="InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe">
+        <span class="headline-bold">🎄Natal Pago pelo Sol:</span><span class="headline-space"> </span><span class="headline-normal">descubra quanto o sol pode pagar da sua conta de luz neste fim de ano.</span>
+      </div>
+    </section>
+    <section class="lp-section lp-video">
+      <div data-layer="VSL" class="VSL">
+        <div class="video-wrapper"><iframe id="panda-ae125902-dca4-4e0c-986f-e1810dbefa60" src="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/?v=ae125902-dca4-4e0c-986f-e1810dbefa60" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" allowfullscreen=true width="100%" height="100%" fetchpriority="high"></iframe></div>
+      </div>
+    </section>
+    <section class="lp-section lp-promo">
+      <div data-layer="Receba sua simulação gratuita" class="RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerramosOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59">
+        <div class="promo-text-normal">Receba sua simulação gratuita e veja como a energia solar pode ser o melhor presente de Natal para sua casa.</div>
+        <div class="promo-text-bold">Encerramos o ano com a melhor condição da Olimpo Energia, válido só até 15 de novembro, às 23h59.</div>
+        <button type="button" data-layer="CTA" class="cta-gold Cta" onclick="natalModal.open()">
+          <span class="cta-gold-text">🎄 Quero meu natal pago pelo sol</span>
+        </button>
+        <div data-layer="TIMER" class="Timer">
+          <div data-layer="Rectangle 6" class="Rectangle6"></div>
+          <div data-layer="TITULO" class="Titulo">
+            <div data-layer="Oferta termina em" class="OfertaTerminaEm">Oferta termina em</div>
+          </div>
+          <div class="timer-cells-container">
+            <div data-layer="DIAS" class="timer-cell Dias">
+              <div data-layer="Frame 2" class="timer-cell-frame Frame2">
+                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="dias" class="timer-cell-label dias Dias">dias</div>
+              </div>
+            </div>
+            <div data-layer="HORAS" class="timer-cell Horas">
+              <div data-layer="Frame 2" class="timer-cell-frame Frame2">
+                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="horas" class="timer-cell-label horas Horas">horas</div>
+              </div>
+            </div>
+            <div data-layer="MINUTOS" class="timer-cell Minutos">
+              <div data-layer="Frame 2" class="timer-cell-frame Frame2">
+                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="minutos" class="timer-cell-label minutos Minutos">minutos</div>
+              </div>
+            </div>
+            <div data-layer="SEGUNDOS" class="timer-cell Segundos">
+              <div data-layer="Frame 2" class="timer-cell-frame Frame2">
+                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="segundos" class="timer-cell-label segundos Segundos">segundos</div>
+              </div>
+            </div>
+          </div>
+          <div data-layer="SUB" class="Sub">
+            <div data-layer="Garanta seu natal pago pelo sol" class="GarantaSeuNatalPagoPeloSol">Garanta seu natal pago pelo sol</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="lp-section lp-footer">
+      <div class="trees-container">
+        <svg class="tree-small" width="68" height="58" viewBox="0 0 68 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M54.3174 20.2539H42.9629L61.6826 38.667H47.6055L67.207 58H0L19.6016 38.667H5.52441L24.2441 20.2539H13.8096L34.0635 0L54.3174 20.2539Z" fill="white"/>
+        </svg>
+        <svg class="tree-medium" width="48" height="42" viewBox="0 0 68 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M54.3174 20.2539H42.9629L61.6826 38.667H47.6055L67.207 58H0L19.6016 38.667H5.52441L24.2441 20.2539H13.8096L34.0635 0L54.3174 20.2539Z" fill="white"/>
+        </svg>
+        <svg class="tree-large" width="120" height="125" viewBox="0 0 91 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M71.7119 30.3096H54.7197L82.7334 57.8643H61.666L91 86.7969H-9.57422L19.7598 57.8643H-1.30762L26.7061 30.3096H11.0918L41.4014 0L71.7119 30.3096Z" fill="white"/>
+        </svg>
+        <svg class="tree-medium" width="48" height="42" viewBox="0 0 68 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M54.3174 20.2539H42.9629L61.6826 38.667H47.6055L67.207 58H0L19.6016 38.667H5.52441L24.2441 20.2539H13.8096L34.0635 0L54.3174 20.2539Z" fill="white"/>
+        </svg>
+        <svg class="tree-small" width="68" height="58" viewBox="0 0 68 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M54.3174 20.2539H42.9629L61.6826 38.667H47.6055L67.207 58H0L19.6016 38.667H5.52441L24.2441 20.2539H13.8096L34.0635 0L54.3174 20.2539Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="snow-background"></div>
+    </section>
 
-<!-- Código exato copiado do Figma (inline styles) -->
-<div style="width: 100%; height: 100%; position: relative">
-    <div style="width: 440px; height: 116px; left: 0px; top: 0px; position: absolute; background: #032137"></div>
-    <div style="padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; left: 211px; top: 67px; position: absolute; background: white; border-radius: 5px; justify-content: center; align-items: center; gap: 10px; display: inline-flex">
-        <div style="text-align: center; color: #032137; font-size: 10px; font-family: Poppins; font-weight: 600; line-height: 24px; word-wrap: break-word">☀️ Quero meu Natal pago pelo sol!</div>
-    </div>
-  <!-- logo image placed where the white placeholder was -->
-  <img src="images/LOGO.svg" alt="Logo" style="position: absolute; left: 12px; top: 70px; width: 79px; height: auto;" />
+    <!-- Caso Real Section -->
+    <section class="lp-section lp-caso-real">
+      <div class="caso-real-container">
+        <div data-layer="BACKGROUND" class="caso-real-background Background">
+          <div data-layer="Container" class="caso-real-title-container Container">
+            <div class="caso-real-title-text">Caso real Olimpo em<br>Campo Grande/MS</div>
+          </div>
+          <div data-layer="De R$700 para R$66/mês" class="caso-real-pricing DeR700ParaR66MS">
+            <span class="pricing-normal">De </span><span class="pricing-old">R$700</span><span class="pricing-normal"> para </span><span class="pricing-new">R$66</span><span class="pricing-normal">/mês</span>
+          </div>
+          <div data-layer="Os clientes da Olimpo já vão passar o Natal pagand" class="caso-real-description OsClientesDaOlimpoJVOPassarONatalPagand">Os clientes da Olimpo já vão passar o Natal pagando apenas a taxa mínima de energia. 🎁</div>
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <div class="benefit-icon-circle">
+                <img src="images/IconesCasoReal/Calendario.svg" alt="Calendário">
+              </div>
+              <div class="benefit-text-container">
+                <div class="benefit-title">Instalação em até 30 dias úteis</div>
+                <div class="benefit-description">Do a economia real</div>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon-circle">
+                <img src="images/IconesCasoReal/SetaPraBaixo.svg" alt="Seta para baixo">
+              </div>
+              <div class="benefit-text-container">
+                <div class="benefit-title">Financiamento facilitado</div>
+                <div class="benefit-description">Parcelas que cabem no bolso</div>
+              </div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-icon-circle">
+                <img src="images/IconesCasoReal/Pessoas.svg" alt="Pessoas">
+              </div>
+              <div class="benefit-text-container">
+                <div class="benefit-title">Acompanhamento por aplicativo</div>
+                <div class="benefit-description">Veja sua produção em tempo real</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
-</div>
-
+  <script src="modal.js"></script>
+  <script>
+    const natalModal = createModal({
+      id: 'natalModal',
+      title: '🎄 Garanta seu Natal Pago pelo Sol',
+      description: 'Preencha seus dados e receba sua simulação gratuita. Após o envio, você será redirecionado para o grupo exclusivo no WhatsApp, onde revelaremos a condição especial da Olimpo Energia.',
+      fields: [
+        {
+          name: 'nomeCompleto',
+          label: 'Nome completo',
+          type: 'text',
+          placeholder: 'Seu nome completo',
+          required: true
+        },
+        {
+          name: 'whatsapp',
+          label: 'WhatsApp (com DDD)',
+          type: 'tel',
+          placeholder: '(67) 99999-9999',
+          required: true
+        },
+        {
+          name: 'cidade',
+          label: 'Cidade',
+          type: 'text',
+          placeholder: 'Campo Grande',
+          required: true
+        }
+      ],
+      submitText: '👍 Entrar no grupo e garantir minha condição',
+      whatsappNumber: '5567999999999',
+      customMessage: (data) => {
+        return `Olá! Meu nome é ${data.nomeCompleto}, sou de ${data.cidade} e quero garantir meu Natal pago pelo sol! Meu WhatsApp: ${data.whatsapp}`;
+      }
+    });
+  </script>
 </body>
 </html>

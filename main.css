@@ -1,55 +1,589 @@
-:root{
+/* ========================================
+   VARIÁVEIS E RESET GLOBAL
+======================================== */
+:root {
 	--brand-blue: #032137;
 	--white: #ffffff;
+	--gold: #FFD700;
+	--red: #D70C0C;
+	--green: #00810F;
 	--container-max: 980px;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0}
-body{font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;background:#f7f8fb;color:var(--brand-blue)}
-
-/* center page content */
-.menu-container{display:flex;justify-content:center;padding:24px}
-
-/* Header block */
-.site-header{
-	position:relative;
-	display:flex;
-	align-items:center;
-	justify-content:flex-start;
-	gap:16px;
-	width:100%;
-	max-width:var(--container-max);
-	background:var(--brand-blue);
-	padding:0 24px; /* vertical centered via fixed height */
-	border-radius:10px;
+* {
+	box-sizing: border-box;
 }
 
-/* decorative white blocks on the left (replicate Figma placeholders) */
-.logo-decor{position:absolute;left:0;top:0;width:160px;height:116px;pointer-events:none}
-.logo-block{position:absolute;background:var(--white);border-radius:3px}
-/* block A: width:65.26px; height:17.43px; left:13.74px; top:12.04px */
-.logo-block.block-a{width:65.26px;height:17.43px;left:13.74px;top:12.04px}
-/* block B: width:25.80px; height:37.23px; left:0px; top:0px */
-.logo-block.block-b{width:25.8px;height:37.23px;left:0;top:0}
+html, body {
+	height: 100%;
+	margin: 0;
+}
 
-.brand{display:inline-flex;align-items:center;gap:12px;margin-left:88px;text-decoration:none}
-.brand-logo{width:79px;height:auto;display:block}
+body {
+	margin: 0;
+	font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	background: #032137;
+	color: var(--brand-blue);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100vh;
+}
 
-.header-center{flex:1;display:flex;justify-content:center}
 
-.cta{background:var(--white);padding:5px 15px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.08)}
-.cta-text{color:var(--brand-blue);font-family:Poppins, Arial;font-size:10px;font-weight:600;line-height:24px;word-wrap:break-word}
+/* ========================================
+   LAYOUT PRINCIPAL
+======================================== */
+.Background {
+	background: #032137;
+	padding: 0;
+	overflow-x: hidden;
+	width: 100%;
+}
 
-/* Responsive adjustments */
-@media (max-width:640px){
-	.site-header{padding:0 12px;border-radius:8px}
-	.logo-decor{width:120px;height:96px}
-	.logo-block.block-a{left:12px;top:10px;width:52px;height:14px}
-	.logo-block.block-b{left:0;top:0;width:22px;height:32px}
-	.brand{margin-left:72px}
-	.brand-logo{width:56px}
-	.cta{padding:8px 12px}
-	.cta-text{font-size:13px}
+.lp-section {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+
+/* ========================================
+   MENU SECTION
+======================================== */
+.lp-menu {
+	padding: 0 20px;
+	margin: 0 0 20px 0;
+}
+
+.Rectangle10 {
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+	height: 116px;
+	background: #032137;
+	border-radius: 8px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 25px;
+	box-sizing: border-box;
+}
+
+.Vector img {
+	width: 79px;
+	height: 38px;
+}
+
+.cta-button {
+	padding: 5px 15px;
+	background: white;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.QueroMeuNatalPagoPeloSol {
+	text-align: center;
+	color: #032137;
+	font-size: 10px;
+	font-family: Poppins;
+	font-weight: 600;
+	line-height: 24px;
+	white-space: nowrap;
+}
+
+
+/* ========================================
+   HEADLINE SECTION
+======================================== */
+.lp-headline {
+	padding: 0 20px;
+	margin: 20px 0;
+}
+
+.InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe {
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.headline-bold {
+	color: rgba(255, 254.99, 254.98, 0.90);
+	font-size: 34px;
+	font-family: Poppins;
+	font-weight: 700;
+	line-height: 45px;
+	word-wrap: break-word;
+}
+
+.headline-space {
+	color: rgba(255, 254.99, 254.98, 0.90);
+	font-size: 40px;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 45px;
+	word-wrap: break-word;
+}
+
+.headline-normal {
+	color: rgba(255, 254.99, 254.98, 0.90);
+	font-size: 27px;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 45px;
+	word-wrap: break-word;
+}
+
+
+/* ========================================
+   VIDEO SECTION
+======================================== */
+.lp-video {
+	padding: 0 20px;
+	margin: 30px 0;
+}
+
+.VSL {
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.video-wrapper {
+	position: relative;
+	padding-top: 56.25%;
+}
+
+.video-wrapper iframe {
+	border: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+
+/* ========================================
+   PROMO TEXT SECTION
+======================================== */
+.lp-promo {
+	padding: 0 20px;
+	margin: 30px 0;
+}
+
+.RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerramosOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59 {
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.promo-text-normal {
+	color: white;
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 24px;
+	margin-bottom: 8px;
+}
+
+.promo-text-bold {
+	color: white;
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 700;
+	line-height: 24px;
+	margin-bottom: 20px;
+}
+
+
+/* ========================================
+   CTA GOLD BUTTON
+======================================== */
+.cta-gold {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	margin: 24px 0 0 0;
+	padding: 20px 16px;
+	background: linear-gradient(180deg, #FFD700 0%, #FFC700 100%);
+	box-shadow: 0 6px 24px 0 #FFD700AA, 0 2px 12px 0 #0004, inset 0 1px 0 0 #FFED4E88;
+	border-radius: 12px;
+	border: 2px solid #FFE55C;
+	outline: none;
+	cursor: pointer;
+	user-select: none;
+	transition: all 0.2s ease-out;
+	text-align: center;
+	-webkit-tap-highlight-color: transparent;
+	touch-action: manipulation;
+}
+
+.cta-gold-text {
+	color: #032137;
+	font-size: 1.2rem;
+	font-family: Poppins, Arial, sans-serif;
+	font-weight: 800;
+	line-height: 1.4;
+	letter-spacing: 0.02em;
+	word-break: break-word;
+	text-align: center;
+	text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.cta-gold:hover, .cta-gold:focus {
+	background: linear-gradient(180deg, #e6c200 0%, #d4b000 100%);
+	box-shadow: 0 10px 32px 0 #FFD700dd, 0 4px 16px 0 #0005, inset 0 1px 0 0 #FFE55C99;
+	transform: translateY(-3px) scale(1.02);
+	border-color: #FFD700;
+}
+
+.cta-gold:active {
+	background: linear-gradient(180deg, #c9ad00 0%, #b39900 100%);
+	box-shadow: 0 2px 8px #FFD700, inset 0 2px 8px rgba(0,0,0,0.2);
+	transform: translateY(1px) scale(0.98);
+	border-color: #c9ad00;
+}
+
+
+/* ========================================
+   TIMER SECTION
+======================================== */
+.Timer {
+	width: 100%;
+	max-width: 390px;
+	height: 144px;
+	position: relative;
+	margin: 30px auto 0 auto;
+}
+
+.Rectangle6 {
+	width: 100%;
+	height: 144px;
+	position: absolute;
+	background: #FFF8E0;
+	border-radius: 20px;
+	border: 2px #FFD700 solid;
+	box-sizing: border-box;
+}
+
+.Titulo {
+	position: absolute;
+	left: 50%;
+	top: 15px;
+	transform: translateX(-50%);
+	width: 170px;
+	height: 20px;
+}
+
+.OfertaTerminaEm {
+	width: 100%;
+	text-align: center;
+	color: black;
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 700;
+	text-transform: uppercase;
+	line-height: 20px;
+	letter-spacing: 0.35px;
+	word-wrap: break-word;
+}
+
+.timer-cells-container {
+	position: absolute;
+	top: 47px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+}
+
+.timer-cell {
+	width: 59px;
+	height: 57px;
+	padding: 10px;
+	background: #FFF0C2;
+	border-radius: 5px;
+	outline: 1px #FFD700 solid;
+	outline-offset: -1px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.timer-cell-frame {
+	width: 39px;
+	height: 30px;
+	position: absolute;
+	left: 10px;
+	top: 17px;
+}
+
+.timer-cell-number {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	text-align: center;
+	color: black;
+	font-size: 30px;
+	font-family: Poppins;
+	font-weight: 700;
+	line-height: 10px;
+	word-wrap: break-word;
+}
+
+.timer-cell-label {
+	position: absolute;
+	top: 20px;
+	text-align: center;
+	color: #363636;
+	font-size: 10px;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 10px;
+	word-wrap: break-word;
+}
+
+.timer-cell-label.dias { left: 8px; }
+.timer-cell-label.horas { left: 5px; }
+.timer-cell-label.minutos { left: -1px; }
+.timer-cell-label.segundos { left: -6px; }
+
+.Sub {
+	position: absolute;
+	bottom: 8px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 229px;
+	height: 24px;
+}
+
+.GarantaSeuNatalPagoPeloSol {
+	width: 100%;
+	text-align: center;
+	color: #032137;
+	font-size: 12px;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 24px;
+	word-wrap: break-word;
+}
+
+
+/* ========================================
+   FOOTER DECORATIONS (TREES)
+======================================== */
+.lp-footer {
+	padding: 0;
+	margin: 5px 0 0 0;
+	position: relative;
+	overflow: hidden;
+	min-height: 130px;
+}
+
+.trees-container {
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	padding: 0;
+	box-sizing: border-box;
+	z-index: 2;
+}
+
+.tree-small {
+	flex-shrink: 0;
+	margin-bottom: 18px;
+}
+
+.tree-medium {
+	flex-shrink: 0;
+	margin-bottom: 15px;
+}
+
+.tree-large {
+	flex-shrink: 0;
+}
+
+.snow-background {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	background: white;
+	border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+	z-index: 1;
+}
+
+
+/* ========================================
+   SEGUNDA LAYER - GRADIENTE
+======================================== */
+/* Removida - agora faz parte do fluxo contínuo */
+
+
+/* ========================================
+   CASO REAL SECTION
+======================================== */
+.lp-caso-real {
+	padding: 40px 20px;
+	background: linear-gradient(180deg, #FFFFFF 0%, #FFFEF5 100%);
+}
+
+.caso-real-container {
+	width: 100%;
+	max-width: 400px;
+	margin: 0 auto;
+}
+
+.caso-real-background {
+	width: 100%;
+	position: relative;
+	background: white;
+	box-shadow: 0px 10px 44.835px rgba(255, 215, 0, 0.35);
+	border-radius: 24px;
+	border: 2.22px #FFD700 solid;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.caso-real-title-container {
+	width: 75%;
+	position: relative;
+	border-radius: 10px;
+	border: 1.11px #FFD700 solid;
+	background: #FFF9E5;
+	padding: 12px 16px;
+	box-sizing: border-box;
+	margin: 0 auto 20px auto;
+}
+
+.caso-real-title-text {
+	text-align: center;
+	color: #032137;
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 700;
+	line-height: 1.4;
+	word-wrap: break-word;
+}
+
+.caso-real-pricing {
+	text-align: center;
+	margin-bottom: 20px;
+	white-space: nowrap;
+}
+
+.pricing-normal {
+	color: black;
+	font-size: 28px;
+	font-family: Poppins;
+	font-weight: 500;
+	line-height: 36px;
+	word-wrap: break-word;
+}
+
+.pricing-old {
+	color: #D70C0C;
+	font-size: 28px;
+	font-family: Poppins;
+	font-weight: 700;
+	line-height: 36px;
+	word-wrap: break-word;
+}
+
+.pricing-new {
+	color: #00810F;
+	font-size: 28px;
+	font-family: Poppins;
+	font-weight: 700;
+	line-height: 36px;
+	word-wrap: break-word;
+}
+
+.caso-real-description {
+	width: 100%;
+	text-align: center;
+	color: rgba(3, 33, 55, 0.80);
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 24px;
+	word-wrap: break-word;
+	margin-bottom: 20px;
+}
+
+.benefits-list {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.benefit-item {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.benefit-icon-circle {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: white;
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+	border-radius: 50%;
+}
+
+.benefit-icon-circle img {
+	width: 20px;
+	height: 20px;
+}
+
+.benefit-text-container {
+	flex: 1;
+}
+
+.benefit-title {
+	color: #032137;
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 600;
+	line-height: 20px;
+	margin-bottom: 4px;
+}
+
+.benefit-description {
+	color: rgba(3, 33, 55, 0.60);
+	font-size: 14px;
+	font-family: Poppins;
+	font-weight: 400;
+	line-height: 20px;
+}
+
+
+/* ========================================
+   RESPONSIVIDADE
+======================================== */
+@media (min-width: 481px) {
+	.cta-gold {
+		max-width: 340px;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 20px 0;
+		font-size: 1.15rem;
+	}
+	.cta-gold-text {
+		font-size: 1.15rem;
+		line-height: 1.5;
+	}
 }
 
