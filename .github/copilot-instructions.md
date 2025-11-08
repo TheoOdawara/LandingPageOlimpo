@@ -137,13 +137,19 @@ font-weight: 800;  /* Extrabold - CTAs */
 }
 ```
 
-### Larguras e Containers (ATUALIZADO)
+### Larguras e Containers (ATUALIZADO - Novembro 2025)
 ```css
-/* Mobile e Desktop (375px referência): */
-/* - Containers internos: max-width: 375px */
-/* - Padding interno: 20px cada lado */
+/* PADRÃO FULL-WIDTH COM PADDING */
+/* Mobile e Desktop: */
+/* - Todos containers: width: 100%, max-width: none */
+/* - Padding lateral: 20px cada lado */
 /* - box-sizing: border-box SEMPRE */
+/* - Centralização: margin: 0 auto + text-align: center onde apropriado */
 /* - Design consistente mobile → desktop */
+
+/* EXCEÇÃO - Elementos específicos: */
+/* - CTA desktop: max-width: 340px (centralizado com margin: auto) */
+/* - Trees desktop: max-width: 500px (centralizado) */
 ```
 
 ---
@@ -155,36 +161,38 @@ font-weight: 800;  /* Extrabold - CTAs */
 .lp-header {
   /* Mobile: fixed no topo, z-index 900 */
   /* Desktop (481px+): static no fluxo */
-  /* Altura: 70px mobile, 80px desktop */
+  /* Altura: 90px mobile, 80px desktop */
   /* Background: var(--brand-blue) sólido */
   /* Items alinhados: flex-end (mobile), center (desktop) */
 }
 
 .Rectangle10 {
-  /* Mobile: width 100%, padding 0 16px 12px */
-  /* Desktop: max-width 400px, padding 0 25px, centralizado */
+  /* Mobile: width 100%, padding 0 20px 12px, max-width: none */
+  /* Desktop: max-width 100%, padding 0 25px, centralizado */
   /* Logo e CTA no bottom (evita notch do iPhone) */
+  /* Logo left, CTA right (justify-content: space-between) */
 }
 ```
 
 ### 2. Botão CTA Dourado
 ```css
 .cta-gold {
-  /* Mobile: width 100%, dentro do container 335px */
-  /* Desktop: max-width 340px, centralizado */
+  /* Mobile: width 100%, max-width: 100% */
+  /* Desktop: max-width 340px, centralizado (margin: auto) */
   /* Gradiente dourado + sombras fortes */
   /* Estados: hover, focus, active */
+  /* Sempre centralizado: margin: 24px auto 0 auto */
 }
 ```
 
 ### 3. Timer de Countdown
 ```css
 .Timer {
-  /* Mobile: max-width 335px + padding 20px */
-  /* Desktop: max-width 360px */
+  /* Mobile/Desktop: max-width: none, padding: 0 20px */
   /* Container: fundo amarelo claro, borda dourada */
   /* 4 células: dias, horas, minutos, segundos */
   /* Labels posicionados absolutamente */
+  /* Centralizado: display: flex, justify-content: center */
 }
 ```
 
@@ -383,25 +391,36 @@ Posso prosseguir?
 
 ## 📌 Referências Rápidas
 
-### Max-widths padrão (ATUALIZADO)
-- Containers: `375px` (mobile e desktop - mesmo tamanho)
-- Padding interno: `20px` cada lado
-- Botões CTA: `100%` (mobile) → `340px` (desktop)
-- Background principal: `width: 100%`
+### Max-widths padrão (ATUALIZADO - Novembro 2025)
+- **Containers principais:** `max-width: none` (full width com padding)
+- **Padding lateral:** `20px` cada lado (mobile e desktop)
+- **Botões CTA:** `100%` (mobile) → `340px` (desktop, centralizado)
+- **Header:** `max-width: none` (mobile), `100%` (desktop)
+- **Trees:** `max-width: 500px` (desktop)
+- **Centralização:** `margin: 0 auto` + `text-align: center` onde apropriado
 - **Sempre usar `box-sizing: border-box`**
 
 ### Espaçamentos comuns
-- Padding seções: `20px` (mobile) → `40px` (desktop)
+- Padding seções: `20px` (mobile) → `40px-60px` (desktop)
 - Margin entre elementos: `20px`, `30px`
-- Gap flexbox: `12px`, `16px`
+- Gap flexbox: `10px`, `12px`, `16px`
 
 ### Border-radius padrão
 - Cards: `24px`
 - Botões: `12px`
 - Inputs: `8px`
-- Badges: `10px`
+- Badges/Timer: `20px`, `10px`
+
+### Centralização obrigatória
+- Headline: `text-align: center`
+- Vídeo: `display: flex, justify-content: center`
+- Texto promocional: `text-align: center`
+- CTA: `margin: auto`
+- Timer: `display: flex, justify-content: center`
+- Árvores: `justify-content: center` com `gap: 10px`
+- Caso Real: título, pricing, descrição centralizados
 
 ---
 
-**Última atualização:** Novembro 2025
-**Versão:** 1.0
+**Última atualização:** 8 de Novembro de 2025
+**Versão:** 1.1
