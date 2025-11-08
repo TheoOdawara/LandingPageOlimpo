@@ -137,30 +137,58 @@ font-weight: 800;  /* Extrabold - CTAs */
 }
 ```
 
+### Larguras e Containers (ATUALIZADO)
+```css
+/* Mobile e Desktop (375px referência): */
+/* - Containers internos: max-width: 375px */
+/* - Padding interno: 20px cada lado */
+/* - box-sizing: border-box SEMPRE */
+/* - Design consistente mobile → desktop */
+```
+
 ---
 
 ## 🧩 Componentes Principais
 
-### 1. Botão CTA Dourado
+### 1. Header (ATUALIZADO)
+```css
+.lp-header {
+  /* Mobile: fixed no topo, z-index 900 */
+  /* Desktop (481px+): static no fluxo */
+  /* Altura: 70px mobile, 80px desktop */
+  /* Background: var(--brand-blue) sólido */
+  /* Items alinhados: flex-end (mobile), center (desktop) */
+}
+
+.Rectangle10 {
+  /* Mobile: width 100%, padding 0 16px 12px */
+  /* Desktop: max-width 400px, padding 0 25px, centralizado */
+  /* Logo e CTA no bottom (evita notch do iPhone) */
+}
+```
+
+### 2. Botão CTA Dourado
 ```css
 .cta-gold {
-  /* Mobile-first: 100% width */
+  /* Mobile: width 100%, dentro do container 335px */
   /* Desktop: max-width 340px, centralizado */
   /* Gradiente dourado + sombras fortes */
   /* Estados: hover, focus, active */
 }
 ```
 
-### 2. Timer de Countdown
+### 3. Timer de Countdown
 ```css
 .Timer {
-  /* Container: fundo #FFF8E0, borda dourada */
+  /* Mobile: max-width 335px + padding 20px */
+  /* Desktop: max-width 360px */
+  /* Container: fundo amarelo claro, borda dourada */
   /* 4 células: dias, horas, minutos, segundos */
   /* Labels posicionados absolutamente */
 }
 ```
 
-### 3. Box Caso Real
+### 4. Box Caso Real
 ```css
 .caso-real-background {
   /* Fundo branco, borda dourada 2.22px */
@@ -168,8 +196,6 @@ font-weight: 800;  /* Extrabold - CTAs */
   /* Border-radius: 24px */
 }
 ```
-
-### 4. Ícones de Benefícios
 ```css
 .benefit-icon-circle {
   /* Círculo branco 40x40px */
@@ -357,10 +383,12 @@ Posso prosseguir?
 
 ## 📌 Referências Rápidas
 
-### Max-widths padrão
-- Containers: `400px` (mobile) → flexível no desktop
+### Max-widths padrão (ATUALIZADO)
+- Containers: `375px` (mobile e desktop - mesmo tamanho)
+- Padding interno: `20px` cada lado
 - Botões CTA: `100%` (mobile) → `340px` (desktop)
 - Background principal: `width: 100%`
+- **Sempre usar `box-sizing: border-box`**
 
 ### Espaçamentos comuns
 - Padding seções: `20px` (mobile) → `40px` (desktop)

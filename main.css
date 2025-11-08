@@ -82,21 +82,21 @@ body {
 
 /* immediate sibling spacing to avoid content hidden under fixed header on mobile */
 .lp-header + .blue-hero {
-	margin-top: 70px; /* header height + pequeno espaçamento */
+	margin-top: 90px; /* header height ajustado */
 }
 
 .Rectangle10 {
 	width: 100%;
-	max-width: none; /* full width on mobile */
+	max-width: none; /* full width para preencher toda a tela */
 	margin: 0;
-	height: 70px; /* altura otimizada para mobile */
+	height: 90px; /* altura aumentada para melhor espaçamento */
 	background: var(--brand-blue);
 	border-radius: 0;
 	position: relative;
 	display: flex;
-	align-items: center;
+	align-items: flex-end; /* alinhar logo e CTA no fundo (evita câmera do iPhone) */
 	justify-content: space-between;
-	padding: 0 16px; /* espaçamento lateral para não colar nos cantos */
+	padding: 0 20px 12px; /* padding para logo e CTA não colarem nas bordas */
 	box-sizing: border-box;
 }
 
@@ -119,7 +119,7 @@ body {
 	}
 
 	.Rectangle10 {
-		max-width: 400px;
+		max-width: 100%;
 		margin: 0 auto;
 		padding: 0 25px;
 		border-radius: 8px;
@@ -152,14 +152,16 @@ body {
    HEADLINE SECTION
 ======================================== */
 .lp-headline {
-	padding: 30px 20px 20px;
+	padding: 30px 0 20px;
 }
 
 .InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe {
 	width: 100%;
-	max-width: 375px;
+	max-width: none; /* remover limite para preencher a tela */
 	margin: 0 auto;
+	padding: 0 20px;
 	text-align: center;
+	box-sizing: border-box;
 }
 
 .headline-bold {
@@ -194,13 +196,15 @@ body {
    VIDEO SECTION
 ======================================== */
 .lp-video {
-	padding: 20px 20px 30px;
+	padding: 20px 0 30px;
 }
 
 .VSL {
 	width: 100%;
-	max-width: 375px;
+	max-width: none;
 	margin: 0 auto;
+	padding: 0 20px;
+	box-sizing: border-box;
 }
 
 .video-wrapper {
@@ -220,13 +224,15 @@ body {
    PROMO TEXT SECTION
 ======================================== */
 .lp-promo {
-	padding: 20px 20px 30px;
+	padding: 20px 0 30px;
 }
 
 .RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerramosOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59 {
 	width: 100%;
-	max-width: 375px;
+	max-width: none;
 	margin: 0 auto;
+	padding: 0 20px;
+	box-sizing: border-box;
 }
 
 .promo-text-normal {
@@ -302,10 +308,12 @@ body {
 ======================================== */
 .Timer {
 	width: 100%;
-	max-width: 375px;
+	max-width: none;
 	height: 144px;
 	position: relative;
 	margin: 30px auto 0 auto;
+	padding: 0 20px;
+	box-sizing: border-box;
 }
 
 .Rectangle6 {
@@ -481,14 +489,16 @@ body {
    CASO REAL SECTION
 ======================================== */
 .lp-caso-real {
-	padding: 50px 20px;
+	padding: 50px 0;
 	background: linear-gradient(180deg, #FFFFFF 0%, #FFFEF5 100%);
 }
 
 .caso-real-container {
 	width: 100%;
-	max-width: 375px;
+	max-width: none;
 	margin: 0 auto;
+	padding: 0 20px;
+	box-sizing: border-box;
 }
 
 .caso-real-background {
@@ -635,40 +645,41 @@ body {
 	}
 
 	.Rectangle10 {
-		max-width: 400px;
+		max-width: 100%;
 		margin: 0 auto;
 		padding: 0 25px;
 		border-radius: 8px;
 		height: 80px;
+		align-items: center; /* desktop: centralizar verticalmente */
 	}
 
 	/* Sections desktop - padronizar largura */
 	.lp-headline {
-		padding: 40px 20px 30px;
+		padding: 40px 0 30px;
 	}
 
 	.InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe {
-		max-width: 400px;
+		max-width: none;
 	}
 
 	.lp-video {
-		padding: 30px 20px;
+		padding: 30px 0;
 	}
 
 	.VSL {
-		max-width: 400px;
+		max-width: none;
 	}
 
 	.lp-promo {
-		padding: 30px 20px;
+		padding: 30px 0;
 	}
 
 	.RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerramosOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59 {
-		max-width: 400px;
+		max-width: none;
 	}
 
 	.Timer {
-		max-width: 400px;
+		max-width: none;
 	}
 
 	.lp-footer {
@@ -681,11 +692,11 @@ body {
 	}
 
 	.lp-caso-real {
-		padding: 60px 20px;
+		padding: 60px 0;
 	}
 
 	.caso-real-container {
-		max-width: 400px;
+		max-width: none;
 	}
 
 	/* CTA button desktop */
