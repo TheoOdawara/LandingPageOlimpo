@@ -22,11 +22,10 @@ html, body {
 body {
 	margin: 0;
 	font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-	background: #032137;
+	background: var(--white); /* Página em branco por padrão */
 	color: var(--brand-blue);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	/* Layout vertical contínuo: não usar flex centering na raíz para evitar áreas de scroll internas */
+	display: block;
 	min-height: 100vh;
 }
 
@@ -34,11 +33,27 @@ body {
 /* ========================================
    LAYOUT PRINCIPAL
 ======================================== */
-.Background {
-	background: #032137;
+.blue-hero {
+	background: var(--brand-blue);
 	padding: 0;
-	overflow-x: hidden;
+	/* permitir que o conteúdo role na página normalmente (sem criar um scroll interno) */
+	overflow: visible;
 	width: 100%;
+}
+
+/* caso-real tem seu próprio background (branco) - sobrescreve se recebeu a classe genérica */
+.caso-real-background {
+	background: var(--white);
+	color: var(--brand-blue);
+}
+
+/* linha dourada separadora (Figma: outline dourado) */
+.gold-line {
+	width: 100%;
+	height: 1px;
+	background: var(--gold);
+	margin: 30px 0 0 0;
+	box-sizing: border-box;
 }
 
 .lp-section {
@@ -46,33 +61,70 @@ body {
 	box-sizing: border-box;
 }
 
+/* REMOVER regra genérica - criar classes específicas para cada container */
+
 
 /* ========================================
-   MENU SECTION
+   HEADER / MENU (mobile-first)
+   - mobile: fixed header, logo left, CTA right (colados nas bordas)
+   - desktop (min-width:481px): static header, content centered, same visual size
 ======================================== */
-.lp-menu {
-	padding: 0 20px;
-	margin: 0 0 20px 0;
+.lp-header {
+	position: fixed;
+	top: 0 !important;
+	left: 0;
+	right: 0;
+	z-index: 900;
+	background: var(--brand-blue); /* fundo sólido azul para visibilidade */
+	transform: translateZ(0); /* force GPU acceleration and prevent any movement */
+	backface-visibility: hidden; /* prevent flickering */
+}
+
+/* immediate sibling spacing to avoid content hidden under fixed header on mobile */
+.lp-header + .blue-hero {
+	margin-top: 70px; /* header height + pequeno espaçamento */
 }
 
 .Rectangle10 {
 	width: 100%;
-	max-width: 400px;
-	margin: 0 auto;
-	height: 116px;
-	background: #032137;
-	border-radius: 8px;
+	max-width: none; /* full width on mobile */
+	margin: 0;
+	height: 70px; /* altura otimizada para mobile */
+	background: var(--brand-blue);
+	border-radius: 0;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 25px;
+	padding: 0 16px; /* espaçamento lateral para não colar nos cantos */
 	box-sizing: border-box;
 }
 
 .Vector img {
 	width: 79px;
 	height: 38px;
+	display: block;
+}
+
+@media (min-width: 481px) {
+	/* Desktop: header becomes part of flow and centered, same visual size */
+	.lp-header {
+		position: static;
+		background: var(--brand-blue);
+		padding: 16px 0;
+	}
+
+	.lp-header + .blue-hero {
+		margin-top: 0; /* remove o espaçamento pois header não é mais fixo */
+	}
+
+	.Rectangle10 {
+		max-width: 400px;
+		margin: 0 auto;
+		padding: 0 25px;
+		border-radius: 8px;
+		height: 80px;
+	}
 }
 
 .cta-button {
@@ -100,13 +152,12 @@ body {
    HEADLINE SECTION
 ======================================== */
 .lp-headline {
-	padding: 0 20px;
-	margin: 20px 0;
+	padding: 30px 20px 20px;
 }
 
 .InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe {
 	width: 100%;
-	max-width: 400px;
+	max-width: 375px;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -143,13 +194,12 @@ body {
    VIDEO SECTION
 ======================================== */
 .lp-video {
-	padding: 0 20px;
-	margin: 30px 0;
+	padding: 20px 20px 30px;
 }
 
 .VSL {
 	width: 100%;
-	max-width: 400px;
+	max-width: 375px;
 	margin: 0 auto;
 }
 
@@ -170,13 +220,12 @@ body {
    PROMO TEXT SECTION
 ======================================== */
 .lp-promo {
-	padding: 0 20px;
-	margin: 30px 0;
+	padding: 20px 20px 30px;
 }
 
 .RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerramosOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59 {
 	width: 100%;
-	max-width: 400px;
+	max-width: 375px;
 	margin: 0 auto;
 }
 
@@ -253,7 +302,7 @@ body {
 ======================================== */
 .Timer {
 	width: 100%;
-	max-width: 390px;
+	max-width: 375px;
 	height: 144px;
 	position: relative;
 	margin: 30px auto 0 auto;
@@ -376,8 +425,8 @@ body {
    FOOTER DECORATIONS (TREES)
 ======================================== */
 .lp-footer {
-	padding: 0;
-	margin: 5px 0 0 0;
+	padding: 40px 0 0;
+	margin: 0;
 	position: relative;
 	overflow: hidden;
 	min-height: 130px;
@@ -385,13 +434,13 @@ body {
 
 .trees-container {
 	width: 100%;
-	max-width: 400px;
+	max-width: 100%; /* permitir que árvores ocupem largura total */
 	margin: 0 auto;
 	position: relative;
 	display: flex;
 	align-items: flex-end;
 	justify-content: space-between;
-	padding: 0;
+	padding: 0 20px;
 	box-sizing: border-box;
 	z-index: 2;
 }
@@ -432,13 +481,13 @@ body {
    CASO REAL SECTION
 ======================================== */
 .lp-caso-real {
-	padding: 40px 20px;
+	padding: 50px 20px;
 	background: linear-gradient(180deg, #FFFFFF 0%, #FFFEF5 100%);
 }
 
 .caso-real-container {
 	width: 100%;
-	max-width: 400px;
+	max-width: 375px;
 	margin: 0 auto;
 }
 
@@ -574,6 +623,72 @@ body {
    RESPONSIVIDADE
 ======================================== */
 @media (min-width: 481px) {
+	/* Header desktop */
+	.lp-header {
+		position: static;
+		background: var(--brand-blue);
+		padding: 16px 0;
+	}
+
+	.lp-header + .blue-hero {
+		margin-top: 0;
+	}
+
+	.Rectangle10 {
+		max-width: 400px;
+		margin: 0 auto;
+		padding: 0 25px;
+		border-radius: 8px;
+		height: 80px;
+	}
+
+	/* Sections desktop - padronizar largura */
+	.lp-headline {
+		padding: 40px 20px 30px;
+	}
+
+	.InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe {
+		max-width: 400px;
+	}
+
+	.lp-video {
+		padding: 30px 20px;
+	}
+
+	.VSL {
+		max-width: 400px;
+	}
+
+	.lp-promo {
+		padding: 30px 20px;
+	}
+
+	.RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerramosOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59 {
+		max-width: 400px;
+	}
+
+	.Timer {
+		max-width: 400px;
+	}
+
+	.lp-footer {
+		padding: 50px 0 0;
+	}
+
+	.trees-container {
+		max-width: 500px;
+		padding: 0 40px;
+	}
+
+	.lp-caso-real {
+		padding: 60px 20px;
+	}
+
+	.caso-real-container {
+		max-width: 400px;
+	}
+
+	/* CTA button desktop */
 	.cta-gold {
 		max-width: 340px;
 		margin-left: auto;
@@ -581,6 +696,7 @@ body {
 		padding: 20px 0;
 		font-size: 1.15rem;
 	}
+
 	.cta-gold-text {
 		font-size: 1.15rem;
 		line-height: 1.5;

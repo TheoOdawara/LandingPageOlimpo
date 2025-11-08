@@ -11,17 +11,17 @@
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <div class="Background">
-    <section class="lp-section lp-menu">
-      <div data-layer="Rectangle 10" class="Rectangle10">
-        <div data-svg-wrapper data-layer="Vector" class="Vector">
-          <img src="images/LOGO.svg" alt="Logo Olimpo">
-        </div>
-        <div data-layer="CTA" class="cta-button" onclick="natalModal.open()">
-          <div data-layer="Quero meu Natal pago pelo sol!" class="QueroMeuNatalPagoPeloSol">☀️ Quero meu Natal pago pelo sol!</div>
-        </div>
+  <header class="lp-section lp-header" role="banner">
+    <div data-layer="Rectangle 10" class="Rectangle10">
+      <div data-svg-wrapper data-layer="Vector" class="Vector">
+        <img src="images/LOGO.svg" alt="Logo Olimpo">
       </div>
-    </section>
+      <div data-layer="CTA" class="cta-button" onclick="natalModal.open()">
+        <div data-layer="Quero meu Natal pago pelo sol!" class="QueroMeuNatalPagoPeloSol">☀️ Quero meu Natal pago pelo sol!</div>
+      </div>
+    </div>
+  </header>
+  <div class="blue-hero">
     <section class="lp-section lp-headline">
       <div data-layer="Instale seu sistema de energia solar agora e ganhe" class="InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe">
         <span class="headline-bold">🎄Natal Pago pelo Sol:</span><span class="headline-space"> </span><span class="headline-normal">descubra quanto o sol pode pagar da sua conta de luz neste fim de ano.</span>
@@ -96,11 +96,12 @@
       </div>
       <div class="snow-background"></div>
     </section>
+  </div>
 
     <!-- Caso Real Section -->
     <section class="lp-section lp-caso-real">
       <div class="caso-real-container">
-        <div data-layer="BACKGROUND" class="caso-real-background Background">
+        <div data-layer="BACKGROUND" class="caso-real-background">
           <div data-layer="Container" class="caso-real-title-container Container">
             <div class="caso-real-title-text">Caso real Olimpo em<br>Campo Grande/MS</div>
           </div>
@@ -137,10 +138,12 @@
               </div>
             </div>
           </div>
+          
+          <!-- separador dourado -->
+          <div class="gold-line" aria-hidden="true"></div>
         </div>
       </div>
     </section>
-  </div>
 
   <script src="modal.js"></script>
   <script>
