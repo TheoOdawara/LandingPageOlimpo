@@ -748,6 +748,15 @@
       id: 'natalModal',
       title: '🎄 Garanta seu Natal Pago pelo Sol',
       description: 'Preencha seus dados e receba sua simulação gratuita. Após o envio, você será redirecionado para o grupo exclusivo no WhatsApp, onde revelaremos a condição especial da Olimpo Energia.',
+      
+      // Configuração do Google Forms
+      googleFormURL: 'https://docs.google.com/forms/d/e/1FAIpQLSeLdJN2xJkjfb5n8b12wcU7ISE2bIGC6Um8QZaDUWNh6NCC1w/formResponse',
+      googleFormEntryMap: {
+        'nomeCompleto': 'entry.155509499',
+        'whatsapp': 'entry.151847681',
+        'cidade': 'entry.1994109954'
+      },
+      
       fields: [
         {
           name: 'nomeCompleto',
@@ -772,10 +781,7 @@
         }
       ],
       submitText: '👍 Entrar no grupo e garantir minha condição',
-      whatsappGroupURL: 'https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga',
-      customMessage: (data) => {
-        return `Olá! Meu nome é ${data.nomeCompleto}, sou de ${data.cidade} e quero garantir meu Natal pago pelo sol! Meu WhatsApp: ${data.whatsapp}`;
-      }
+      whatsappGroupURL: 'https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga'
     });
 
     // ===================================

@@ -1,11 +1,2 @@
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Temporary files
-*.tmp
-.cache/
 
 ProximoPasso.md

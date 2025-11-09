@@ -159,41 +159,29 @@ class Modal {
   }
 
   redirectToWhatsApp(data) {
-    // 1. ENVIA PARA O GOOGLE FORMS (100% gratuito e sem limites)
-    const googleFormId = '1FAIpQLSeLdJN2xJkjfb5n8b12wcU7ISE2bIGC6Um8QZaDUWNh6NCC1w';
+    // Pega configurações do Google Forms das opções
+    const entryMap = this.options.googleFormEntryMap;
+    const baseURL = this.options.googleFormURL;
+
+    // Se o mapa de entrys e a URL existirem, envia para o Google Forms
+    if (entryMap && baseURL) {
+      const params = new URLSearchParams();
+      
+      // Mapeia dinamicamente: para cada campo no mapa, adiciona aos parâmetros
+      for (const key in entryMap) {
+        if (data[key]) {
+          params.append(entryMap[key], data[key]);
+        }
+      }
+
+      // Envia via imagem invisível (sempre funciona, sem CORS)
+      const img = new Image();
+      img.src = `${baseURL}?${params.toString()}`;
+    }
     
-    // Envia para Google Forms
-    const formData = new FormData();
-    formData.append('entry.155509499', data.nomeCompleto);  // Nome Completo
-    formData.append('entry.151847681', data.whatsapp);      // WhatsApp
-    formData.append('entry.1994109954', data.cidade);       // Cidade
-    
-    fetch(`https://docs.google.com/forms/d/e/${googleFormId}/formResponse`, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: formData
-    })
-    .then(() => {
-      console.log('✅ Lead enviado para Google Sheets com sucesso!');
-    })
-    .catch(error => {
-      console.log('⚠️ Erro ao enviar para form (mas pode ter sido enviado):', error);
-    });
-    
-    // Backup local
-    const leads = JSON.parse(localStorage.getItem('olimpo_leads') || '[]');
-    leads.push({
-      ...data,
-      timestamp: new Date().toISOString()
-    });
-    localStorage.setItem('olimpo_leads', JSON.stringify(leads));
-    console.log('📊 Total de leads salvos localmente:', leads.length);
-    
-    // 2. REDIRECIONA PARA O WHATSAPP
+    // REDIRECIONA PARA O WHATSAPP
     if (this.options.whatsappGroupURL) {
-      window.open(this.options.whatsappGroupURL, '_blank');
-    } else {
-      console.error('Nenhum link de grupo WhatsApp configurado');
+      window.location.href = this.options.whatsappGroupURL;
     }
   }
 
