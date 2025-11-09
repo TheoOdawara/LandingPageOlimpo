@@ -202,9 +202,15 @@ class Modal {
       console.error('   baseURL:', baseURL);
     }
     
-    // REDIRECIONA PARA O WHATSAPP
+    // REDIRECIONA PARA O WHATSAPP (COM ATRASO PARA EVITAR RACE CONDITION)
     if (this.options.whatsappGroupURL) {
-      window.location.href = this.options.whatsappGroupURL;
+      console.log('⏳ Atrasando redirecionamento para o WhatsApp em 500ms...');
+      
+      // Atraso de 500ms garante que a requisição seja completada
+      // antes do navegador descarregar a página
+      setTimeout(() => {
+        window.location.href = this.options.whatsappGroupURL;
+      }, 500);
     }
   }
 

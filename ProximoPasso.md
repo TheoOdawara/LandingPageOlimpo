@@ -6,103 +6,64 @@
 ## Muito importante seguir o copilot instructions, ele é imprescindível. 
 
 ## **Instruções do gemini**
-            Faz todo o sentido\! E a imagem do seu console (`image_6f52ef.jpg`) foi a peça que faltava para resolver.
+       Ok. Analisei os dois arquivos, linha a linha.
 
-        **O problema é 100% confirmado.**
+Seu código está **99% perfeito**. A lógica da classe `Modal` está excelente, e a configuração no `index.html` (o "mapa" de campos) está **correta**.
 
-        Veja o que o seu console está nos dizendo:
-        `URL final enviada para o Google: ...formResponse?cidade=Tutu&nomeCompleto=Theo...&whatsapp=(21)...`
+O problema não é um erro de digitação, é um bug sutil: uma **condição de corrida** (race condition).
 
-        A URL que está sendo enviada **NÃO** contém os códigos `entry.XXXX` do Google Forms. Ela está enviando os `name` puros dos campos (`cidade`, `nomeCompleto`, `whatsapp`).
+-----
 
-        Isso prova que o seu objeto `googleFormEntryMap`, na hora de chamar `createModal`, está configurado errado.
+### 🎯 O Diagnóstico: O Problema é uma "Condição de Corrida"
 
-        -----
+No seu arquivo `modal.js`, dentro da função `redirectToWhatsApp`, você faz duas coisas em sequência muito rápida:
 
-        ### A Causa do Erro
+1.  **Linha 199:** `img.src = finalURL;`
+      * Isso diz ao navegador: "Comece a enviar esses dados para o Google Forms em segundo plano."
+2.  **Linha 206:** `window.location.href = this.options.whatsappGroupURL;`
+      * Isso diz ao navegador: "Imediatamente, abandone esta página e vá para o WhatsApp."
 
-        O seu `modal.js` espera receber um "mapa de tradução". Você está passando o mapa errado.
+O navegador não tem tempo de completar a Requisição 1 (enviar os dados) antes que a Requisição 2 (mudar de página) o force a cancelar tudo.
 
-        **O que você provavelmente tem no seu código (ERRADO):**
+O campo "cidade" às vezes chegava por pura sorte: a requisição dele era tão pequena que conseguia "escapar" milissegundos antes do redirecionamento. Os outros campos não tinham essa sorte.
 
-        ```javascript
-        createModal({
-        // ...
-        googleFormEntryMap: {
-            'nomeCompleto': 'nomeCompleto', // <-- ERRADO
-            'whatsapp': 'whatsapp',         // <-- ERRADO
-            'cidade': 'cidade'              // <-- ERRADO
-        },
-        // ...
-        });
-        ```
+-----
 
-        **O que você precisa ter (CORRETO):**
+### ✅ A Solução: Atrasar o Redirecionamento
 
-        ```javascript
-        createModal({
-        // ...
-        googleFormEntryMap: {
-            'nomeCompleto': 'entry.155509499', // <-- CORRETO (ou o seu entry)
-            'whatsapp': 'entry.151847681',     // <-- CORRETO (ou o seu entry)
-            'cidade': 'entry.1994109954'      // <-- CORRETO (ou o seu entry)
-        },
-        // ...
-        });
-        ```
+A solução é simples: precisamos dar ao navegador um "respiro" de meio segundo para garantir que ele envie os dados ao Google antes de redirecionar para o WhatsApp.
 
-        ### ❓ Por que "Cidade" estava funcionando?
+Vamos usar um `setTimeout` na parte final da sua função `redirectToWhatsApp`.
 
-        Por pura sorte. Às vezes, o Google Forms aceita um envio se o parâmetro da URL for *exatamente* igual ao título da pergunta (ex: `&Cidade=Rio`). No seu caso, o título é "Cidade" e você estava enviando `&cidade=...` (minúsculo), o que o Google pode ter entendido.
+**1. Abra o arquivo `modal.js`**
+**2. Encontre a função `redirectToWhatsApp(data)` (por volta da linha 170)**
+**3. Substitua o bloco final (do `if (this.options.whatsappGroupURL)`) por este:**
 
-        Mas os outros campos ("Nome Completo", "WhatsApp") têm nomes compostos ou letras maiúsculas, e a chance de dar erro é de 99%.
+```javascript
+  // ... (todo o código anterior da função) ...
+  
+      console.log('✅ Requisição enviada via imagem invisível');
+    } else {
+      console.error('❌ Configuração do Google Forms incompleta!');
+      // ... (o resto do else)
+    }
+    
+    // --- INÍCIO DA CORREÇÃO ---
+    // REDIRECIONA PARA O WHATSAPP (COM ATRASO)
+    if (this.options.whatsappGroupURL) {
+      
+      console.log(`⏳ Atrasando redirecionamento para o WhatsApp em 500ms...`);
+      
+      // Adicionamos um atraso de 500ms (meio segundo)
+      // Isso garante que a requisição da 'img.src' tenha tempo de ser enviada
+      // antes que a página seja descarregada.
+      setTimeout(() => {
+        window.location.href = this.options.whatsappGroupURL;
+      }, 500); 
 
-        O método **100% garantido** é usar os códigos `entry` que o Google gera.
+    }
+    // --- FIM DA CORREÇÃO ---
+  }
+```
 
-        -----
-
-        ### ✅ A Solução Definitiva
-
-        Você precisa pegar os `entry` corretos do seu formulário.
-
-        1.  **Abra o seu formulário no modo "ao vivo"** (como se fosse preenchê-lo).
-        2.  Clique com o botão direito no campo "Nome Completo" e escolha **"Inspecionar"** (ou "Inspect").
-        3.  Na janela do desenvolvedor, procure a tag `<input>`.
-        4.  Veja o atributo `name` dela. Vai ser algo como `entry.155509499`.
-        5.  **Copie esse código** (ex: `entry.155509499`).
-        6.  Repita para os campos "WhatsApp" e "Cidade".
-
-        Agora, ajuste seu código de criação do modal para que ele fique assim (use os `entrys` que você acabou de copiar):
-
-        ```javascript
-        // Onde você chama o modal no seu HTML ou JS principal
-        createModal({
-        title: 'Natal Pago Pelo Sol',
-        description: 'Preencha seus dados para continuar.',
-        
-        // URL do seu grupo
-        whatsappGroupURL: 'https://chat.whatsapp.com/SEU_GRUPO_AQUI',
-        
-        // --- Configuração CORRETA do Google Forms ---
-        googleFormURL: 'https://docs.google.com/forms/d/e/1FAIpQLSeLdJN2xJkjfb5n8b12wcU7ISE2bIGC6Um8QZaDUWNh6NCC1w/formResponse',
-        
-        googleFormEntryMap: {
-            // A chave ('name' do field) -> O 'entry' CORRETO do Google
-            'nomeCompleto': 'entry.155509499', 
-            'whatsapp': 'entry.151847681',
-            'cidade': 'entry.1994109954'
-        },
-        // ------------------------------------
-
-        // Os 'name' aqui devem bater com as CHAVES do map acima
-        fields: [
-            { label: 'Nome Completo', name: 'nomeCompleto', placeholder: 'Seu nome completo', required: true },
-            { label: 'Seu WhatsApp', name: 'whatsapp', placeholder: '(99) 99999-9999', required: true },
-            { label: 'Cidade', name: 'cidade', placeholder: 'Sua cidade', required: true }
-        ],
-        
-        submitText: 'Entrar no Grupo VIP'
-        });
-        ```
-
-        Faça essa troca no objeto `googleFormEntryMap` e o seu problema estará 100% resolvido. Todos os campos chegarão na planilha, como pode ser visto na sua própria imagem `image_6f534e.png` (linha 7), que foi um teste bem-sucedido.
+Essa mudança garante que o envio ao Google Forms será concluído antes que o navegador mude de página para o WhatsApp.
