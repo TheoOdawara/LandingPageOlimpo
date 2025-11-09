@@ -202,14 +202,17 @@ class Modal {
       console.error('   baseURL:', baseURL);
     }
     
-    // REDIRECIONA PARA O WHATSAPP (COM ATRASO PARA EVITAR RACE CONDITION)
+    // ABRE WHATSAPP EM NOVA ABA E FOCA NELA (MANTÉM LANDING ABERTA)
     if (this.options.whatsappGroupURL) {
-      console.log('⏳ Atrasando redirecionamento para o WhatsApp em 500ms...');
+      console.log('🚀 Abrindo WhatsApp em nova aba...');
       
       // Atraso de 500ms garante que a requisição seja completada
-      // antes do navegador descarregar a página
       setTimeout(() => {
-        window.location.href = this.options.whatsappGroupURL;
+        const newTab = window.open(this.options.whatsappGroupURL, '_blank');
+        if (newTab) {
+          newTab.focus(); // Foca na nova aba
+          console.log('✅ WhatsApp aberto em nova aba e focado');
+        }
       }, 500);
     }
   }
