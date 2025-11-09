@@ -43,6 +43,19 @@ class Modal {
 
     document.body.insertAdjacentHTML('beforeend', modalHTML);
     
+    // Cria o iframe oculto que será o alvo do envio do Google Forms
+    // Isso garante que o envio não interrompa a página principal
+    if (!document.getElementById('googleFormsSubmitFrame')) {
+      const iframe = document.createElement('iframe');
+      iframe.id = 'googleFormsSubmitFrame';
+      iframe.name = 'googleFormsSubmitFrame'; // 'name' é crucial para o 'target' do form
+      iframe.style.display = 'none';
+      iframe.addEventListener('load', () => {
+        console.log('✅ Iframe carregou (envio ao Google concluído)');
+      });
+      document.body.appendChild(iframe);
+    }
+    
     // Registra a instância globalmente para acesso pelos event handlers
     if (!window.modalInstances) {
       window.modalInstances = {};
@@ -162,58 +175,66 @@ class Modal {
   }
 
   redirectToWhatsApp(data) {
-    // Pega configurações do Google Forms das opções
     const entryMap = this.options.googleFormEntryMap;
     const baseURL = this.options.googleFormURL;
 
-    // LOGS DE DIAGNÓSTICO COMPLETOS
-    console.log('🔍 DIAGNÓSTICO - redirectToWhatsApp chamado');
+    console.log('🔍 DIAGNÓSTICO - redirectToWhatsApp (MÉTODO IFRAME POST)');
     console.log('📋 Dados recebidos:', data);
     console.log('🗺️ Entry Map:', entryMap);
     console.log('🌐 Base URL:', baseURL);
 
-    // Se o mapa de entrys e a URL existirem, envia para o Google Forms
+    // 1. Se o mapa de entrys e a URL existirem, envia para o Google Forms
     if (entryMap && baseURL) {
-      const params = new URLSearchParams();
-      
-      // Mapeia dinamicamente: para cada campo no mapa, adiciona aos parâmetros
+      // Cria um formulário dinâmico e invisível
+      const dynamicForm = document.createElement('form');
+      dynamicForm.action = baseURL; // A URL .../formResponse
+      dynamicForm.method = 'POST';
+      dynamicForm.target = 'googleFormsSubmitFrame'; // <--- A MÁGICA ACONTECE AQUI
+      dynamicForm.style.display = 'none';
+
+      // 2. Cria inputs ocultos para cada dado mapeado
       for (const key in entryMap) {
         if (data[key]) {
           const entryCode = entryMap[key];
           const value = data[key];
-          params.append(entryCode, value);
-          console.log(`✅ Mapeado: ${key} → ${entryCode} = "${value}"`);
+
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = entryCode; // Ex: 'entry.155509499'
+          input.value = value;
+          dynamicForm.appendChild(input);
+          
+          console.log(`✅ Mapeado para POST: ${input.name} = "${input.value}"`);
         } else {
           console.warn(`⚠️ Campo "${key}" não encontrado nos dados`);
         }
       }
 
-      const finalURL = `${baseURL}?${params.toString()}`;
-      console.log('🚀 URL final enviada para o Google:', finalURL);
-
-      // Envia via imagem invisível (sempre funciona, sem CORS)
-      const img = new Image();
-      img.src = finalURL;
+      // 3. Adiciona o formulário à página, envia e remove
+      document.body.appendChild(dynamicForm);
+      dynamicForm.submit();
+      document.body.removeChild(dynamicForm);
       
-      console.log('✅ Requisição enviada via imagem invisível');
+      console.log('🚀 Formulário POST enviado para o iframe oculto.');
+
     } else {
       console.error('❌ Configuração do Google Forms incompleta!');
-      console.error('   entryMap:', entryMap);
-      console.error('   baseURL:', baseURL);
     }
     
-    // ABRE WHATSAPP EM NOVA ABA E FOCA NELA (MANTÉM LANDING ABERTA)
+    // 4. ABRE O WHATSAPP EM NOVA ABA (COM ATRASO POR SEGURANÇA)
     if (this.options.whatsappGroupURL) {
-      console.log('🚀 Abrindo WhatsApp em nova aba...');
+      console.log(`⏳ Atrasando redirecionamento para o WhatsApp em 500ms...`);
       
-      // Atraso de 500ms garante que a requisição seja completada
+      // O atraso garante que o 'form.submit()' teve tempo de disparar
       setTimeout(() => {
         const newTab = window.open(this.options.whatsappGroupURL, '_blank');
         if (newTab) {
           newTab.focus(); // Foca na nova aba
           console.log('✅ WhatsApp aberto em nova aba e focado');
+        } else {
+          console.warn('⚠️ O Pop-up do WhatsApp foi bloqueado pelo navegador.');
         }
-      }, 500);
+      }, 500); // 500ms é mais que suficiente
     }
   }
 
