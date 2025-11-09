@@ -136,6 +136,16 @@ class Modal {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
+    // Enviar evento de Lead para o Meta Pixel
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Lead', {
+        content_name: 'Natal Pago pelo Sol',
+        content_category: 'Energia Solar',
+        value: 0.00,
+        currency: 'BRL'
+      });
+    }
+
     // Callback personalizado se fornecido
     if (this.options.onSubmit) {
       this.options.onSubmit(data);

@@ -4,9 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎄 Natal Pago pelo Sol - Olimpo Energia</title>
+  
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '417219127737945');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=417219127737945&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- PandaVideo Optimizations -->
+  <link rel="preload" href="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/css/styles.css" as="style">
+  <link rel="prerender" href="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/?v=427034d3-9987-42c1-b07c-624b609db7b6">
+  <link rel="preload" href="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/js/hls.js" as="script">
+  <link rel="preload" href="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/js/plyr.polyfilled.min.js" as="script">
+  <link rel="preload" href="https://config.tv.pandavideo.com.br/vz-64ebbd5f-ca9/427034d3-9987-42c1-b07c-624b609db7b6.json" as="fetch">
+  <link rel="preload" href="https://config.tv.pandavideo.com.br/vz-64ebbd5f-ca9/config.json" as="fetch">
+  <link rel="preload" href="https://b-vz-64ebbd5f-ca9.tv.pandavideo.com.br/427034d3-9987-42c1-b07c-624b609db7b6/playlist.m3u8" as="fetch">
+  <link rel="dns-prefetch" href="https://b-vz-64ebbd5f-ca9.tv.pandavideo.com.br">
+  <link rel="dns-prefetch" href="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br">
+  <link rel="dns-prefetch" href="https://vz-64ebbd5f-ca9.b-cdn.net">
+  
   <link rel="stylesheet" href="modal.css">
   <link rel="stylesheet" href="main.css">
 </head>
@@ -47,25 +79,25 @@
           <div class="timer-cells-container">
             <div data-layer="DIAS" class="timer-cell Dias">
               <div data-layer="Frame 2" class="timer-cell-frame Frame2">
-                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="56" class="timer-cell-number" id="timer-days">56</div>
                 <div data-layer="dias" class="timer-cell-label dias Dias">dias</div>
               </div>
             </div>
             <div data-layer="HORAS" class="timer-cell Horas">
               <div data-layer="Frame 2" class="timer-cell-frame Frame2">
-                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="56" class="timer-cell-number" id="timer-hours">56</div>
                 <div data-layer="horas" class="timer-cell-label horas Horas">horas</div>
               </div>
             </div>
             <div data-layer="MINUTOS" class="timer-cell Minutos">
               <div data-layer="Frame 2" class="timer-cell-frame Frame2">
-                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="56" class="timer-cell-number" id="timer-minutes">56</div>
                 <div data-layer="minutos" class="timer-cell-label minutos Minutos">minutos</div>
               </div>
             </div>
             <div data-layer="SEGUNDOS" class="timer-cell Segundos">
               <div data-layer="Frame 2" class="timer-cell-frame Frame2">
-                <div data-layer="56" class="timer-cell-number">56</div>
+                <div data-layer="56" class="timer-cell-number" id="timer-seconds">56</div>
                 <div data-layer="segundos" class="timer-cell-label segundos Segundos">segundos</div>
               </div>
             </div>
@@ -120,7 +152,7 @@
               </div>
             </div>
             <div class="benefit-item">
-              <div class="benefit-icon-circle">
+              <div class="benefit-icon-arrow">
                 <img src="images/IconesCasoReal/SetaPraBaixo.svg" alt="Seta para baixo">
               </div>
               <div class="benefit-text-container">
@@ -165,7 +197,7 @@
               <!-- VS Icon -->
               <div class="vs-icon-circle">
                 <div class="vs-icon-inner">
-                  <img src="images/IconesCasoReal/SetaPraBaixo.svg" alt="VS">
+                  <img src="images/IconesCasoReal/vs.svg" alt="VS">
                 </div>
               </div>
 
@@ -191,12 +223,519 @@
 
             <!-- CTA Final -->
             <button type="button" class="cta-final" onclick="natalModal.open()">
-              <span class="cta-final-text"><span class="cta-emoji">👉</span>  Quero meu natal pago pelo sol 👈</span>
+              <span class="cta-emoji cta-emoji-left">👉</span>
+              <span class="cta-final-text">Quero meu natal pago pelo sol</span>
+              <span class="cta-emoji cta-emoji-right">👈</span>
             </button>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Como Funciona Section -->
+    <section class="lp-section lp-como-funciona">
+      <div class="como-funciona-container">
+        <!-- Header -->
+        <div class="como-funciona-header">
+          <h2 class="como-funciona-title">Como funciona<br/>simples e rápido</h2>
+          <p class="como-funciona-subtitle">Do primeiro contato até você começar a economizar, cuidamos de tudo para você</p>
+        </div>
+
+        <!-- Timeline Container -->
+        <div class="timeline-container">
+          <!-- Linha vertical dourada -->
+          <div class="timeline-line"></div>
+
+          <!-- Step 1 -->
+          <div class="timeline-step">
+            <div class="timeline-icon">
+              <img src="images/IconeComoFunciona/1-AnaliseDoSeuPerfil.svg" alt="Análise do seu perfil">
+            </div>
+            <div class="timeline-card">
+              <h3 class="timeline-card-title">1. Análise do seu perfil</h3>
+              <p class="timeline-card-text">Avaliamos seu consumo e telhado para criar o projeto ideal</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="timeline-step">
+            <div class="timeline-icon">
+              <img src="images/IconeComoFunciona/2-PropostaPersonalisada.svg" alt="Proposta personalizada">
+            </div>
+            <div class="timeline-card timeline-card-left">
+              <h3 class="timeline-card-title">2. Proposta personalizada</h3>
+              <p class="timeline-card-text">Você recebe um orçamento detalhado sem compromisso</p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="timeline-step">
+            <div class="timeline-icon">
+              <img src="images/IconeComoFunciona/3-InstalacaoProfissional.svg" alt="Instalação profissional">
+            </div>
+            <div class="timeline-card">
+              <h3 class="timeline-card-title">3. Instalação profissional</h3>
+              <p class="timeline-card-text">Nossa equipe instala todo o sistema em poucos dias</p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="timeline-step">
+            <div class="timeline-icon">
+              <img src="images/IconeComoFunciona/4-ConexaoARede.svg" alt="Conexão à rede">
+            </div>
+            <div class="timeline-card timeline-card-left">
+              <h3 class="timeline-card-title">4. Conexão à rede</h3>
+              <p class="timeline-card-text">Homologamos seu sistema junto à concessionária</p>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="timeline-step">
+            <div class="timeline-icon">
+              <img src="images/IconeComoFunciona/5-ComeceAEconomizar.svg" alt="Comece a economizar">
+            </div>
+            <div class="timeline-card">
+              <h3 class="timeline-card-title">5. Comece a economizar</h3>
+              <p class="timeline-card-text">Acompanhe sua geração e economia em tempo real</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Entenda Melhor Section -->
+    <section class="lp-section lp-videos">
+      <div class="videos-container">
+        <!-- Header -->
+        <h2 class="videos-title">Entenda melhor — o investimento que se paga sozinho</h2>
+
+        <!-- Videos Grid -->
+        <div class="videos-grid">
+          
+          <!-- Video 1 - Depoimento Vilson -->
+          <div class="video-card">
+            <div class="video-wrapper">
+              <iframe id="panda-427034d3-9987-42c1-b07c-624b609db7b6" src="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/?v=427034d3-9987-42c1-b07c-624b609db7b6" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" allowfullscreen="true" width="100%" height="100%" fetchpriority="high"></iframe>
+            </div>
+            <p class="video-caption">Depoimento Vilson</p>
+          </div>
+
+          <!-- Video 2 - Depoimento Isaias -->
+          <div class="video-card">
+            <div class="video-wrapper">
+              <iframe id="panda-349689d4-5aa2-4d25-b130-aa054fe2cc3b" src="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/?v=349689d4-5aa2-4d25-b130-aa054fe2cc3b" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" allowfullscreen="true" width="100%" height="100%" fetchpriority="high"></iframe>
+            </div>
+            <p class="video-caption">Depoimento Isaias</p>
+          </div>
+
+          <!-- Video 3 - Depoimento Geraldo -->
+          <div class="video-card">
+            <div class="video-wrapper">
+              <iframe id="panda-718ddd12-8d24-4918-9e9d-787231e1c2b3" src="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br/embed/?v=718ddd12-8d24-4918-9e9d-787231e1c2b3" allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture" allowfullscreen="true" width="100%" height="100%" fetchpriority="high"></iframe>
+            </div>
+            <p class="video-caption">Depoimento Geraldo</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Pode Confiar Section -->
+    <section class="lp-section lp-pode-confiar">
+      <div class="pode-confiar-container">
+        <!-- Header -->
+        <div class="pode-confiar-header">
+          <h2 class="pode-confiar-title">
+            <span class="title-white">Energia solar que você</span><br>
+            <span class="title-gold">pode confiar</span>
+          </h2>
+          <p class="pode-confiar-subtitle">Mais de 1.000 projetos instalados, levando energia limpa e economia para milhares de famílias brasileiras</p>
+        </div>
+
+        <!-- Benefits List -->
+        <div class="benefits-list-confiar">
+          <!-- Benefit 1 -->
+          <div class="benefit-card-confiar">
+            <div class="benefit-icon-confiar">
+              <img src="images/PodeConfiar/Garantia.svg" alt="Garantia de 25 Anos">
+            </div>
+            <div class="benefit-content-confiar">
+              <h3 class="benefit-title-confiar">Garantia de 25 Anos</h3>
+              <p class="benefit-text-confiar">Equipamentos premium com garantia estendida e suporte técnico vitalício</p>
+            </div>
+          </div>
+
+          <!-- Benefit 2 -->
+          <div class="benefit-card-confiar">
+            <div class="benefit-icon-confiar">
+              <img src="images/PodeConfiar/Certificacao.svg" alt="Certificação Internacional">
+            </div>
+            <div class="benefit-content-confiar">
+              <h3 class="benefit-title-confiar">Certificação Internacional</h3>
+              <p class="benefit-text-confiar">Painéis solares certificados com máxima eficiência energética</p>
+            </div>
+          </div>
+
+          <!-- Benefit 3 -->
+          <div class="benefit-card-confiar">
+            <div class="benefit-icon-confiar">
+              <img src="images/PodeConfiar/Instalacao.svg" alt="Instalação Rápida">
+            </div>
+            <div class="benefit-content-confiar">
+              <h3 class="benefit-title-confiar">Instalação Rápida</h3>
+              <p class="benefit-text-confiar">Seu sistema instalado e funcionando em poucos dias</p>
+            </div>
+          </div>
+
+          <!-- Benefit 4 -->
+          <div class="benefit-card-confiar">
+            <div class="benefit-icon-confiar">
+              <img src="images/PodeConfiar/Suporte.svg" alt="Suporte Completo">
+            </div>
+            <div class="benefit-content-confiar">
+              <h3 class="benefit-title-confiar">Suporte Completo</h3>
+              <p class="benefit-text-confiar">Cuidamos de toda a burocracia e documentação para você</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Card with Image -->
+        <div class="featured-card-confiar">
+          <img src="images/PodeConfiar/Imagem.jpg" alt="Projeto Instalado" class="featured-image">
+          <div class="featured-overlay"></div>
+          <div class="featured-content">
+            <div class="featured-number">1.000 kwh</div>
+            <p class="featured-text">R$13.440 de economia anual</p>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <button type="button" class="cta-confiar" onclick="natalModal.open()">
+          <span class="cta-emoji-confiar">👉</span>
+          <span class="cta-confiar-text">Quero meu natal pago pelo sol</span>
+          <span class="cta-emoji-confiar">👈</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- O Que Os Clientes Dizem Section -->
+    <section class="lp-section lp-testimonials">
+      <div class="testimonials-container">
+        <!-- Header -->
+        <div class="testimonials-header">
+          <h2 class="testimonials-title">
+            <span class="title-regular">O que nossos</span><br>
+            <span class="title-bold-gold">clientes</span>
+            <span class="title-regular"> dizem</span>
+          </h2>
+          <p class="testimonials-subtitle">Mais de 5.000 famílias já estão economizando com energia solar</p>
+        </div>
+
+        <!-- Testimonials List -->
+        <div class="testimonials-list">
+          
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="stars-rating">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+              </div>
+              <div class="quote-icon">
+                <img src="images/oQueOsClientesDizem/duplaVirgula.svg" alt="Aspas">
+              </div>
+            </div>
+            <blockquote class="testimonial-text">
+              "Fui muito bem atendido desde o primeiro contato. A instalação foi rápida e o retorno financeiro está vindo como prometido."
+            </blockquote>
+            <div class="testimonial-author">
+              <p class="author-name">Eduardo Barros</p>
+              <p class="author-location">Campo Grande, MS</p>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="stars-rating">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+              </div>
+              <div class="quote-icon">
+                <img src="images/oQueOsClientesDizem/duplaVirgula.svg" alt="Aspas">
+              </div>
+            </div>
+            <blockquote class="testimonial-text">
+              "Fiquei impressionada com a qualidade dos materiais e a rapidez na instalação. Estou muito satisfeita com o serviço prestado!!"
+            </blockquote>
+            <div class="testimonial-author">
+              <p class="author-name">Cristiane Moura</p>
+              <p class="author-location">Campo Grande, MS</p>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="stars-rating">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+                <img src="images/oQueOsClientesDizem/Estrela1.svg" alt="Estrela">
+              </div>
+              <div class="quote-icon">
+                <img src="images/oQueOsClientesDizem/duplaVirgula.svg" alt="Aspas">
+              </div>
+            </div>
+            <blockquote class="testimonial-text">
+              "Instalar energia solar com a Olimpo foi a melhor escolha que fiz. Em menos de 10 dias tudo já estava funcionando! Atendimento excelente."
+            </blockquote>
+            <div class="testimonial-author">
+              <p class="author-name">Tatiane Ribeiro</p>
+              <p class="author-location">Campo Grande, MS</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Google Rating Badge -->
+        <div class="google-rating-badge">
+          <img src="images/oQueOsClientesDizem/Estrela2.svg" alt="Estrela" class="badge-star star-left">
+          <div class="badge-content">
+            <p class="badge-text">4.9/5.0 de avaliação<br>média no Google</p>
+          </div>
+          <img src="images/oQueOsClientesDizem/Estrela2.svg" alt="Estrela" class="badge-star star-right">
+        </div>
+      </div>
+    </section>
+
+    <!-- Por Que Escolher Section -->
+    <section class="lp-section lp-why-choose">
+      <div class="why-choose-container">
+        <!-- Header -->
+        <div class="why-choose-header">
+          <h2 class="why-choose-title">
+            <span class="title-dark">Por que escolher</span><br>
+            <span class="title-gold">energia solar ?</span>
+          </h2>
+          <p class="why-choose-subtitle">Benefícios que vão muito além da economia na conta de luz</p>
+        </div>
+
+        <!-- Benefits Grid -->
+        <div class="benefits-grid">
+          
+          <!-- Benefit 1 -->
+          <div class="benefit-box">
+            <div class="benefit-icon-box">
+              <img src="images/PorqueEscolher/Economize.svg" alt="Economize até 95%">
+            </div>
+            <h3 class="benefit-box-title">Economize até 95%</h3>
+            <p class="benefit-box-text">Reduza drasticamente sua conta de energia elétrica</p>
+          </div>
+
+          <!-- Benefit 2 -->
+          <div class="benefit-box">
+            <div class="benefit-icon-box">
+              <img src="images/PorqueEscolher/EnergiaLimpa.svg" alt="Energia Limpa">
+            </div>
+            <h3 class="benefit-box-title">Energia Limpa</h3>
+            <p class="benefit-box-text">Ajude o planeta com energia renovável e sustentável</p>
+          </div>
+
+          <!-- Benefit 3 -->
+          <div class="benefit-box">
+            <div class="benefit-icon-box">
+              <img src="images/PorqueEscolher/ValorizeSeuImovel.svg" alt="Valorize seu imóvel">
+            </div>
+            <h3 class="benefit-box-title">Valorize seu imóvel</h3>
+            <p class="benefit-box-text">Casas com energia solar valem até 30% mais</p>
+          </div>
+
+          <!-- Benefit 4 -->
+          <div class="benefit-box">
+            <div class="benefit-icon-box">
+              <img src="images/PorqueEscolher/IndependenciaEnergetica.svg" alt="Independência energética">
+            </div>
+            <h3 class="benefit-box-title">Independência energética</h3>
+            <p class="benefit-box-text">Livre-se dos aumentos abusivos das concessionárias</p>
+          </div>
+
+          <!-- Benefit 5 -->
+          <div class="benefit-box">
+            <div class="benefit-icon-box">
+              <img src="images/PorqueEscolher/RetornoGarantido.svg" alt="Retorno garantido">
+            </div>
+            <h3 class="benefit-box-title">Retorno garantido</h3>
+            <p class="benefit-box-text">Seu investimento se paga em 3 a 5 anos</p>
+          </div>
+
+          <!-- Benefit 6 -->
+          <div class="benefit-box">
+            <div class="benefit-icon-box">
+              <img src="images/PorqueEscolher/EnergiaInesgotavel.svg" alt="Energia inesgotável">
+            </div>
+            <h3 class="benefit-box-title">Energia inesgotável</h3>
+            <p class="benefit-box-text">Aproveite o sol, fonte abundante e gratuita</p>
+          </div>
+
+        </div>
+
+        <!-- CTA Box -->
+        <div class="cta-box-solar">
+          <div class="cta-box-stars"></div>
+          <div class="cta-box-content">
+            <p class="cta-box-question">Pronto para começar a economizar?</p>
+            <p class="cta-box-description">Faça uma simulação gratuita e descubra quanto você pode economizar por mês com energia solar. Sem compromisso!</p>
+            
+            <div class="cta-box-buttons">
+              <button type="button" class="cta-primary-solar" onclick="natalModal.open()">
+                Fazer simulação grátis
+              </button>
+              <button type="button" class="cta-secondary-solar" onclick="natalModal.open()">
+                Falar com especialista
+              </button>
+            </div>
+
+            <p class="cta-box-benefits">☀️ Sem custo de simulação | Atendimento em 24h | Parcele em até 120x</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. DÚVIDAS SECTION -->
+    <section class="lp-section lp-duvidas">
+      <div class="duvidas-container">
+        <!-- Header -->
+        <div class="duvidas-header">
+          <div class="duvidas-title">
+            <span class="title-dark-question">Dúvidas sobre o Natal</span>
+            <span class="title-gold-question">Pago pelo Sol</span>
+          </div>
+        </div>
+
+        <!-- FAQ List -->
+        <div class="faq-list">
+          <!-- FAQ Item 1 -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-question-text">Posso financiar o sistema?</span>
+              <img src="images/Duvidas/SetaPrabaixo.svg" alt="Expandir" class="faq-icon">
+            </div>
+            <div class="faq-answer">
+              <p class="faq-answer-text">Sim, as parcelas cabem no valor da sua conta atual e o sistema se paga sozinho.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-question-text">Funciona em dias nublados?</span>
+              <img src="images/Duvidas/SetaPrabaixo.svg" alt="Expandir" class="faq-icon">
+            </div>
+            <div class="faq-answer">
+              <p class="faq-answer-text">Sim, a geração é menor, mas o sistema compensa nos dias de sol.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-question-text">Em quanto tempo o sistema se paga?</span>
+              <img src="images/Duvidas/SetaPrabaixo.svg" alt="Expandir" class="faq-icon">
+            </div>
+            <div class="faq-answer">
+              <p class="faq-answer-text">Em média de 3 a 5 anos, e depois é lucro mensal.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-question-text">Em quanto tempo é feita a instalação?</span>
+              <img src="images/Duvidas/SetaPrabaixo.svg" alt="Expandir" class="faq-icon">
+            </div>
+            <div class="faq-answer">
+              <p class="faq-answer-text">Em até 30 dias úteis após o contrato.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <div class="faq-item">
+            <div class="faq-question">
+              <span class="faq-question-text">A condição realmente acaba em 15/1!?</span>
+              <img src="images/Duvidas/SetaPrabaixo.svg" alt="Expandir" class="faq-icon">
+            </div>
+            <div class="faq-answer">
+              <p class="faq-answer-text">Sim. Essa é a última condição especial do ano da Olimpo Energia.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Footer -->
+        <div class="duvidas-footer">
+          <p class="duvidas-footer-text">Ainda tem dúvidas? Fale com nossos especialistas!</p>
+          <button class="cta-especialista" onclick="natalModal.open()">
+            Falar com especialista
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. RODAPÉ -->
+    <footer class="lp-footer-final">
+      <div class="footer-container">
+        <!-- Logo -->
+        <div class="footer-logo">
+          <img src="images/LOGO.svg" alt="Olimpo Solar" class="footer-logo-img">
+        </div>
+
+        <!-- Instagram -->
+        <div class="footer-instagram">
+          <a href="https://www.instagram.com/olimpo.energia" target="_blank" rel="noopener noreferrer" class="instagram-link" aria-label="Instagram Olimpo Solar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="#FFD700" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="#FFD700" stroke-width="2"/>
+              <circle cx="18" cy="6" r="1.5" fill="#FFD700"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Contatos -->
+        <div class="footer-contacts">
+          <h3 class="footer-contacts-title">Contatos:</h3>
+          
+          <div class="footer-contact-item">
+            <img src="images/Rodape/Telefone.svg" alt="Telefone" class="contact-icon">
+            <span class="contact-text">(67) 99099-9099</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <img src="images/Rodape/Endereço.svg" alt="Localização" class="contact-icon">
+            <span class="contact-text">Campo Grande, MS</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <img src="images/Rodape/Email.svg" alt="Email" class="contact-icon">
+            <span class="contact-text">contato@olimposolar.com.br</span>
+          </div>
+        </div>
+
+        <!-- Copyright e Informações Legais -->
+        <div class="footer-legal">
+          <p class="footer-legal-text">Política de Privacidade</p>
+          <p class="footer-legal-text">CNPJ: 55.139.821/0001-03</p>
+          <p class="footer-legal-text">© 2025 Olimpo Solar. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
 
   <script src="modal.js"></script>
   <script>
@@ -233,6 +772,57 @@
         return `Olá! Meu nome é ${data.nomeCompleto}, sou de ${data.cidade} e quero garantir meu Natal pago pelo sol! Meu WhatsApp: ${data.whatsapp}`;
       }
     });
+
+    // ===================================
+    // FAQ ACCORDION
+    // ===================================
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', function() {
+          // Fecha outros items abertos
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item && otherItem.classList.contains('active')) {
+              otherItem.classList.remove('active');
+            }
+          });
+          
+          // Toggle do item clicado
+          item.classList.toggle('active');
+        });
+      });
+    });
+
+    // ===================================
+    // COUNTDOWN TIMER - 15/01/2026 23:59:59
+    // ===================================
+    function updateCountdown() {
+      const endDate = new Date('2026-01-15T23:59:59').getTime();
+      const now = new Date().getTime();
+      const distance = endDate - now;
+
+      if (distance < 0) {
+        document.querySelector('.Timer').innerHTML = '<p style="color: #FFD700; text-align: center;">Promoção encerrada!</p>';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('timer-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('timer-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('timer-minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('timer-seconds').textContent = String(seconds).padStart(2, '0');
+    }
+
+    // Atualiza a cada segundo
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   </script>
 </body>
 </html>
