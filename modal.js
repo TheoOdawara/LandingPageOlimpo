@@ -136,6 +136,9 @@ class Modal {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
+    // LOG DE DIAGNÓSTICO 1: Mostra exatamente o que foi capturado
+    console.log('Dados do formulário:', data);
+
     // Enviar evento de Lead para o Meta Pixel
     if (typeof fbq !== 'undefined') {
       fbq('track', 'Lead', {
@@ -174,9 +177,14 @@ class Modal {
         }
       }
 
+      const finalURL = `${baseURL}?${params.toString()}`;
+      
+      // LOG DE DIAGNÓSTICO 2: Mostra a URL completa que será enviada
+      console.log('URL final enviada para o Google:', finalURL);
+
       // Envia via imagem invisível (sempre funciona, sem CORS)
       const img = new Image();
-      img.src = `${baseURL}?${params.toString()}`;
+      img.src = finalURL;
     }
     
     // REDIRECIONA PARA O WHATSAPP
