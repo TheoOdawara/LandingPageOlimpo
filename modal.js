@@ -159,19 +159,37 @@ class Modal {
   }
 
   redirectToWhatsApp(data) {
-    // 1. ENVIA PARA O GOOGLE SHEETS
-    const googleSheetsURL = 'https://script.google.com/macros/s/AKfycbzWZPq6JYLEOyCa7gLqkYMzd2xMFsLLlhV7atG5tktGvhwsZgQUz__7kslbrVxJD2Tb/exec';
+    // 1. ENVIA PARA O GOOGLE FORMS (100% gratuito e sem limites)
+    const googleFormId = '1FAIpQLSeLdJN2xJkjfb5n8b12wcU7ISE2bIGC6Um8QZaDUWNh6NCC1w';
     
-    fetch(googleSheetsURL, {
+    // Envia para Google Forms
+    const formData = new FormData();
+    formData.append('entry.155509499', data.nomeCompleto);  // Nome Completo
+    formData.append('entry.151847681', data.whatsapp);      // WhatsApp
+    formData.append('entry.1994109954', data.cidade);       // Cidade
+    
+    fetch(`https://docs.google.com/forms/d/e/${googleFormId}/formResponse`, {
       method: 'POST',
       mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    }).catch(error => console.log('Erro ao enviar para planilha:', error));
-
-    // 2. REDIRECIONA PARA O WHATSAPP (grupo ou número individual)
+      body: formData
+    })
+    .then(() => {
+      console.log('✅ Lead enviado para Google Sheets com sucesso!');
+    })
+    .catch(error => {
+      console.log('⚠️ Erro ao enviar para form (mas pode ter sido enviado):', error);
+    });
+    
+    // Backup local
+    const leads = JSON.parse(localStorage.getItem('olimpo_leads') || '[]');
+    leads.push({
+      ...data,
+      timestamp: new Date().toISOString()
+    });
+    localStorage.setItem('olimpo_leads', JSON.stringify(leads));
+    console.log('📊 Total de leads salvos localmente:', leads.length);
+    
+    // 2. REDIRECIONA PARA O WHATSAPP
     if (this.options.whatsappGroupURL) {
       window.open(this.options.whatsappGroupURL, '_blank');
     } else {
