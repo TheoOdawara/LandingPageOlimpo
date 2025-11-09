@@ -159,18 +159,24 @@ class Modal {
   }
 
   redirectToWhatsApp(data) {
-    let message;
+    // 1. ENVIA PARA O GOOGLE SHEETS
+    const googleSheetsURL = 'https://script.google.com/macros/s/AKfycbzWZPq6JYLEOyCa7gLqkYMzd2xMFsLLlhV7atG5tktGvhwsZgQUz__7kslbrVxJD2Tb/exec';
     
-    if (this.options.customMessage) {
-      message = this.options.customMessage(data);
-    } else {
-      // Mensagem padrão
-      const fieldValues = Object.entries(data).map(([key, value]) => `${key}: ${value}`).join(', ');
-      message = `Olá! Preenchi o formulário com os seguintes dados: ${fieldValues}`;
-    }
+    fetch(googleSheetsURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    }).catch(error => console.log('Erro ao enviar para planilha:', error));
 
-    const whatsappUrl = `https://wa.me/${this.options.whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    // 2. REDIRECIONA PARA O WHATSAPP (grupo ou número individual)
+    if (this.options.whatsappGroupURL) {
+      window.open(this.options.whatsappGroupURL, '_blank');
+    } else {
+      console.error('Nenhum link de grupo WhatsApp configurado');
+    }
   }
 
   destroy() {
