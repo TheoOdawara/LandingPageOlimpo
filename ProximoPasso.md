@@ -6,116 +6,103 @@
 ## Muito importante seguir o copilot instructions, ele é imprescindível. 
 
 ## **Instruções do gemini**
-        Ok, peço desculpas por isso. Se a solução anterior não funcionou, o problema quase certamente não está mais na classe `Modal` (que agora está correta e flexível), mas sim em **como você está chamando e configurando o modal** ou em algum detalhe no caminho.
+            Faz todo o sentido\! E a imagem do seu console (`image_6f52ef.jpg`) foi a peça que faltava para resolver.
 
-    Vamos fazer um diagnóstico passo a passo. O erro mais comum é um detalhe na URL ou nos "entrys" do Google Forms.
+        **O problema é 100% confirmado.**
 
-    ### Passo 1: Adicionar "Pontos de Espionagem" no Código
+        Veja o que o seu console está nos dizendo:
+        `URL final enviada para o Google: ...formResponse?cidade=Tutu&nomeCompleto=Theo...&whatsapp=(21)...`
 
-    Vamos adicionar duas linhas no seu arquivo `modal.js` para que ele nos diga no console do navegador exatamente o que está acontecendo.
+        A URL que está sendo enviada **NÃO** contém os códigos `entry.XXXX` do Google Forms. Ela está enviando os `name` puros dos campos (`cidade`, `nomeCompleto`, `whatsapp`).
 
-    1.  Abra o arquivo `modal.js`.
-    2.  Encontre a função `handleSubmit(data)`.
-    3.  Adicione `console.log('Dados do formulário:', data);` logo no início da função.
-    4.  Encontre a função `redirectToWhatsApp(data)`.
-    5.  Adicione `console.log('URL final enviada para o Google:', \`${baseURL}?${params.toString()}\`);`um pouco antes da linha`img.src = ...\`.
+        Isso prova que o seu objeto `googleFormEntryMap`, na hora de chamar `createModal`, está configurado errado.
 
-    Seu código modificado ficará assim:
+        -----
 
-    ```javascript
-    // Dentro da função handleSubmit
-    handleSubmit() {
-        const form = document.getElementById(`${this.modalId}-form`);
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        ### A Causa do Erro
 
-        console.log('Dados do formulário:', data); // <--- ADICIONE AQUI
+        O seu `modal.js` espera receber um "mapa de tradução". Você está passando o mapa errado.
 
-        // ... resto do código ...
-    }
+        **O que você provavelmente tem no seu código (ERRADO):**
 
-    // Dentro da função redirectToWhatsApp
-    redirectToWhatsApp(data) {
-        const entryMap = this.options.googleFormEntryMap;
-        const baseURL = this.options.googleFormURL;
-
-        if (entryMap && baseURL) {
-        const params = new URLSearchParams();
-        
-        for (const key in entryMap) {
-            if (data[key]) {
-            params.append(entryMap[key], data[key]);
-            }
-        }
-
-        const finalURL = `${baseURL}?${params.toString()}`;
-        console.log('URL final enviada para o Google:', finalURL); // <--- ADICIONE AQUI
-
-        const img = new Image();
-        img.src = finalURL; // Use a variável que criamos
-        }
-        
-        // ... resto do código ...
-    }
-    ```
-
-    ### Passo 2: Testar e Diagnosticar
-
-    Agora, faça o seguinte:
-
-    1.  **Salve** o arquivo `modal.js` modificado.
-    2.  **Abra seu site** no navegador (Chrome ou Firefox).
-    3.  **Abra o Console do Desenvolvedor:** Pressione a tecla **F12**. Uma nova janela se abrirá. Clique na aba "Console".
-    4.  **Preencha e envie o formulário** novamente.
-    5.  **Observe o Console:** Duas mensagens devem aparecer.
-
-    Agora, vamos analisar os possíveis resultados:
-
-    -----
-
-    #### **Cenário A: Nenhuma mensagem aparece no console.**
-
-    * **Diagnóstico:** O evento de `submit` do formulário não está sendo capturado. Isso é muito raro. Verifique se há algum outro script na sua página causando um erro que impede o `modal.js` de funcionar.
-
-    -----
-
-    #### **Cenário B: A primeira mensagem (`Dados do formulário`) aparece, mas está errada.**
-
-    * Você verá algo como: `Dados do formulário: { nome: "Teste", celular: "999" }`
-    * **Diagnóstico:** Como na minha primeira resposta, os `name` dos campos na sua chamada `createModal` não batem com as chaves do `googleFormEntryMap`.
-    * **Solução:** Garanta que eles sejam idênticos.
         ```javascript
         createModal({
         // ...
         googleFormEntryMap: {
-            'nomeCompleto': 'entry.123', // <-- Chave é 'nomeCompleto'
-            'whatsapp': 'entry.456'
+            'nomeCompleto': 'nomeCompleto', // <-- ERRADO
+            'whatsapp': 'whatsapp',         // <-- ERRADO
+            'cidade': 'cidade'              // <-- ERRADO
         },
-        fields: [
-            { label: 'Nome', name: 'nomeCompleto' }, // <-- 'name' DEVE SER 'nomeCompleto'
-            { label: 'WhatsApp', name: 'whatsapp' }
-        ]
+        // ...
         });
         ```
 
-    -----
+        **O que você precisa ter (CORRETO):**
 
-    #### **Cenário C: As duas mensagens aparecem, e os dados parecem corretos.**
+        ```javascript
+        createModal({
+        // ...
+        googleFormEntryMap: {
+            'nomeCompleto': 'entry.155509499', // <-- CORRETO (ou o seu entry)
+            'whatsapp': 'entry.151847681',     // <-- CORRETO (ou o seu entry)
+            'cidade': 'entry.1994109954'      // <-- CORRETO (ou o seu entry)
+        },
+        // ...
+        });
+        ```
 
-    Este é o cenário mais provável. Você verá algo assim no console:
+        ### ❓ Por que "Cidade" estava funcionando?
 
-    ```
-    Dados do formulário: { nomeCompleto: "João Silva", whatsapp: "(11) 98888-7777", cidade: "São Paulo" }
+        Por pura sorte. Às vezes, o Google Forms aceita um envio se o parâmetro da URL for *exatamente* igual ao título da pergunta (ex: `&Cidade=Rio`). No seu caso, o título é "Cidade" e você estava enviando `&cidade=...` (minúsculo), o que o Google pode ter entendido.
 
-    URL final enviada para o Google: https://docs.google.com/forms/d/e/.../formResponse?entry.155509499=João+Silva&entry.151847681=(11)+98888-7777&entry.1994109954=São+Paulo
-    ```
+        Mas os outros campos ("Nome Completo", "WhatsApp") têm nomes compostos ou letras maiúsculas, e a chance de dar erro é de 99%.
 
-    * **Diagnóstico:** O script está fazendo tudo certo\! O problema está nos dados que você forneceu (a URL ou os `entrys`).
-    * **Solução (Faça este teste crucial):**
-        1.  **Copie a URL inteira** que apareceu no console.
-        2.  **Cole-a em uma nova aba do navegador** e pressione Enter.
-        3.  Uma de duas coisas acontecerá:
-            * **Aparece a página de confirmação do Google Forms ("Sua resposta foi registrada.")**: Isso significa que os `entrys` e a URL estão **corretos**, mas algo no seu site (talvez um bloqueador de anúncios ou outra política de segurança) está impedindo a `new Image()` de fazer a requisição. Isso é raro.
-            * **Aparece uma página de erro do Google ou o próprio formulário em branco**: Isso confirma 100% que **a URL do Google Forms está errada ou os códigos `entry.xxxxx` estão incorretos.** Verifique novamente como você pegou esses dados. A URL deve terminar em `/formResponse`.
+        O método **100% garantido** é usar os códigos `entry` que o Google gera.
 
-    Por favor, faça esses testes e me diga o que apareceu no seu console. A URL gerada é a chave para resolvermos isso.
+        -----
+
+        ### ✅ A Solução Definitiva
+
+        Você precisa pegar os `entry` corretos do seu formulário.
+
+        1.  **Abra o seu formulário no modo "ao vivo"** (como se fosse preenchê-lo).
+        2.  Clique com o botão direito no campo "Nome Completo" e escolha **"Inspecionar"** (ou "Inspect").
+        3.  Na janela do desenvolvedor, procure a tag `<input>`.
+        4.  Veja o atributo `name` dela. Vai ser algo como `entry.155509499`.
+        5.  **Copie esse código** (ex: `entry.155509499`).
+        6.  Repita para os campos "WhatsApp" e "Cidade".
+
+        Agora, ajuste seu código de criação do modal para que ele fique assim (use os `entrys` que você acabou de copiar):
+
+        ```javascript
+        // Onde você chama o modal no seu HTML ou JS principal
+        createModal({
+        title: 'Natal Pago Pelo Sol',
+        description: 'Preencha seus dados para continuar.',
+        
+        // URL do seu grupo
+        whatsappGroupURL: 'https://chat.whatsapp.com/SEU_GRUPO_AQUI',
+        
+        // --- Configuração CORRETA do Google Forms ---
+        googleFormURL: 'https://docs.google.com/forms/d/e/1FAIpQLSeLdJN2xJkjfb5n8b12wcU7ISE2bIGC6Um8QZaDUWNh6NCC1w/formResponse',
+        
+        googleFormEntryMap: {
+            // A chave ('name' do field) -> O 'entry' CORRETO do Google
+            'nomeCompleto': 'entry.155509499', 
+            'whatsapp': 'entry.151847681',
+            'cidade': 'entry.1994109954'
+        },
+        // ------------------------------------
+
+        // Os 'name' aqui devem bater com as CHAVES do map acima
+        fields: [
+            { label: 'Nome Completo', name: 'nomeCompleto', placeholder: 'Seu nome completo', required: true },
+            { label: 'Seu WhatsApp', name: 'whatsapp', placeholder: '(99) 99999-9999', required: true },
+            { label: 'Cidade', name: 'cidade', placeholder: 'Sua cidade', required: true }
+        ],
+        
+        submitText: 'Entrar no Grupo VIP'
+        });
+        ```
+
+        Faça essa troca no objeto `googleFormEntryMap` e o seu problema estará 100% resolvido. Todos os campos chegarão na planilha, como pode ser visto na sua própria imagem `image_6f534e.png` (linha 7), que foi um teste bem-sucedido.

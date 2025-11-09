@@ -166,6 +166,12 @@ class Modal {
     const entryMap = this.options.googleFormEntryMap;
     const baseURL = this.options.googleFormURL;
 
+    // LOGS DE DIAGNÓSTICO COMPLETOS
+    console.log('🔍 DIAGNÓSTICO - redirectToWhatsApp chamado');
+    console.log('📋 Dados recebidos:', data);
+    console.log('🗺️ Entry Map:', entryMap);
+    console.log('🌐 Base URL:', baseURL);
+
     // Se o mapa de entrys e a URL existirem, envia para o Google Forms
     if (entryMap && baseURL) {
       const params = new URLSearchParams();
@@ -173,18 +179,27 @@ class Modal {
       // Mapeia dinamicamente: para cada campo no mapa, adiciona aos parâmetros
       for (const key in entryMap) {
         if (data[key]) {
-          params.append(entryMap[key], data[key]);
+          const entryCode = entryMap[key];
+          const value = data[key];
+          params.append(entryCode, value);
+          console.log(`✅ Mapeado: ${key} → ${entryCode} = "${value}"`);
+        } else {
+          console.warn(`⚠️ Campo "${key}" não encontrado nos dados`);
         }
       }
 
       const finalURL = `${baseURL}?${params.toString()}`;
-      
-      // LOG DE DIAGNÓSTICO 2: Mostra a URL completa que será enviada
-      console.log('URL final enviada para o Google:', finalURL);
+      console.log('🚀 URL final enviada para o Google:', finalURL);
 
       // Envia via imagem invisível (sempre funciona, sem CORS)
       const img = new Image();
       img.src = finalURL;
+      
+      console.log('✅ Requisição enviada via imagem invisível');
+    } else {
+      console.error('❌ Configuração do Google Forms incompleta!');
+      console.error('   entryMap:', entryMap);
+      console.error('   baseURL:', baseURL);
     }
     
     // REDIRECIONA PARA O WHATSAPP
