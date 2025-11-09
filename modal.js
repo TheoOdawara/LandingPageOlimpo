@@ -144,13 +144,12 @@ class Modal {
     document.body.style.overflow = 'auto';
   }
 
-  handleSubmit() {
+  async handleSubmit() {
     const form = document.getElementById(`${this.modalId}-form`);
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // LOG DE DIAGNÓSTICO 1: Mostra exatamente o que foi capturado
-    console.log('Dados do formulário:', data);
+    console.log('📋 Dados do formulário:', data);
 
     // Enviar evento de Lead para o Meta Pixel
     if (typeof fbq !== 'undefined') {
@@ -162,80 +161,62 @@ class Modal {
       });
     }
 
-    // Callback personalizado se fornecido
-    if (this.options.onSubmit) {
-      this.options.onSubmit(data);
-    } else {
-      // Comportamento padrão: redirecionar para WhatsApp
-      this.redirectToWhatsApp(data);
+    try {
+      // Tenta enviar os dados e ESPERA (await) a conclusão
+      await this.sendDataToWebhook(data);
+      console.log('✅ Sucesso: Dados enviados ao webhook ANTES do redirecionamento.');
+
+      // Só executa se o "await" acima funcionar
+      if (this.options.whatsappGroupURL) {
+        console.log('🚀 Abrindo WhatsApp em nova aba...');
+        const newTab = window.open(this.options.whatsappGroupURL, '_blank');
+        if (newTab) {
+          newTab.focus();
+        } else {
+          console.warn('⚠️ O Pop-up do WhatsApp foi bloqueado pelo navegador.');
+        }
+      }
+
+    } catch (error) {
+      console.error('❌ ERRO CRÍTICO no envio do webhook:', error);
+      // Mesmo com erro, ainda tenta redirecionar para o WhatsApp
+      if (this.options.whatsappGroupURL) {
+        window.open(this.options.whatsappGroupURL, '_blank');
+      }
     }
 
     this.close();
     form.reset();
   }
 
-  redirectToWhatsApp(data) {
-    const entryMap = this.options.googleFormEntryMap;
-    const baseURL = this.options.googleFormURL;
+  async sendDataToWebhook(data) {
+    // A URL do webhook do Make.com
+    const webhookURL = this.options.webhookURL;
 
-    console.log('🔍 DIAGNÓSTICO - redirectToWhatsApp (MÉTODO IFRAME POST)');
-    console.log('📋 Dados recebidos:', data);
-    console.log('🗺️ Entry Map:', entryMap);
-    console.log('🌐 Base URL:', baseURL);
-
-    // 1. Se o mapa de entrys e a URL existirem, envia para o Google Forms
-    if (entryMap && baseURL) {
-      // Cria um formulário dinâmico e invisível
-      const dynamicForm = document.createElement('form');
-      dynamicForm.action = baseURL; // A URL .../formResponse
-      dynamicForm.method = 'POST';
-      dynamicForm.target = 'googleFormsSubmitFrame'; // <--- A MÁGICA ACONTECE AQUI
-      dynamicForm.style.display = 'none';
-
-      // 2. Cria inputs ocultos para cada dado mapeado
-      for (const key in entryMap) {
-        if (data[key]) {
-          const entryCode = entryMap[key];
-          const value = data[key];
-
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = entryCode; // Ex: 'entry.155509499'
-          input.value = value;
-          dynamicForm.appendChild(input);
-          
-          console.log(`✅ Mapeado para POST: ${input.name} = "${input.value}"`);
-        } else {
-          console.warn(`⚠️ Campo "${key}" não encontrado nos dados`);
-        }
-      }
-
-      // 3. Adiciona o formulário à página, envia e remove
-      document.body.appendChild(dynamicForm);
-      dynamicForm.submit();
-      document.body.removeChild(dynamicForm);
-      
-      console.log('🚀 Formulário POST enviado para o iframe oculto.');
-
-    } else {
-      console.error('❌ Configuração do Google Forms incompleta!');
+    if (!webhookURL) {
+      console.error('❌ URL do Webhook não definida!');
+      throw new Error('Webhook URL not set');
     }
-    
-    // 4. ABRE O WHATSAPP EM NOVA ABA (COM ATRASO POR SEGURANÇA)
-    if (this.options.whatsappGroupURL) {
-      console.log(`⏳ Atrasando redirecionamento para o WhatsApp em 500ms...`);
-      
-      // O atraso garante que o 'form.submit()' teve tempo de disparar
-      setTimeout(() => {
-        const newTab = window.open(this.options.whatsappGroupURL, '_blank');
-        if (newTab) {
-          newTab.focus(); // Foca na nova aba
-          console.log('✅ WhatsApp aberto em nova aba e focado');
-        } else {
-          console.warn('⚠️ O Pop-up do WhatsApp foi bloqueado pelo navegador.');
-        }
-      }, 500); // 500ms é mais que suficiente
+
+    console.log(`🚀 Enviando dados para: ${webhookURL}`);
+
+    // Envia os dados e aguarda a resposta
+    const response = await fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    // Se o Make.com der erro, isso vai falhar
+    if (!response.ok) {
+      console.error('❌ Falha no envio do webhook', await response.text());
+      throw new Error('Webhook send failed');
     }
+
+    console.log('✅ Webhook retornou sucesso (HTTP 200)');
+    return response;
   }
 
   destroy() {

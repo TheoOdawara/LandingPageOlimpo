@@ -5,154 +5,195 @@
 
 ## Muito importante seguir o copilot instructions, ele é imprescindível. 
 
+## **Webhook**
+    https://hook.us2.make.com/qou9qw1wx7ajg8hpobin1kshbk614f8j
+
 ## **Instruções do gemini**
-    Ok, entendi. Você está 100% certo, e a frustração é justificada. O problema é que você está tendo que usar esse "hack" do Google Forms de graça (porque seu App Script/Cloud não funciona), e esse método não é confiável.
+        Sim, e peço desculpas por isso. O método do Google Forms é uma "gambiarra" que depende de tempo (`setTimeout`) e às vezes falha por causa do redirecionamento do WhatsApp (a "condição de corrida").
 
-    O problema é exatamente a **"condição de corrida"** que eu mencionei. O método `new Image()` (o "pixel") é uma gambiarra. Ele não dá nenhuma garantia de que o envio será concluído.
+        Vamos abandonar esse método do Google Forms. A solução 100% gratuita e **confiável** é usar um **Webhook**, algo que você já tem experiência, pois vi no seu histórico que você usa o **Make.com**.
 
-    O navegador vê o `window.open` (para o WhatsApp) como prioridade e **cancela o envio do "pixel" no meio do caminho**. O `setTimeout` é só uma *tentativa* de dar tempo, mas não é uma garantia.
+        ### 💡 A Solução Correta: Make.com (Webhook + Google Sheets)
 
-    Vamos resolver isso de vez com a solução 100% confiável.
+        Este método é o padrão da indústria e é 100% confiável, pois vamos usar `async/await` no JavaScript. O navegador será **forçado** a esperar o envio dos dados antes de tentar abrir o WhatsApp.
 
-    -----
+        **O Fluxo será:**
 
-    ### 🚀 A Solução 100% Confiável (O Método do `iframe` Oculto)
+        1.  **Make.com:** Você cria um "Webhook" que gera uma URL única.
+        2.  **Make.com:** Esse webhook envia os dados para sua planilha Google Sheets.
+        3.  **JavaScript:** O formulário no seu site envia os dados para a URL do webhook usando `fetch`.
+        4.  **JavaScript:** O script *espera* (`await`) a resposta do Make.com.
+        5.  **JavaScript:** **Somente após** confirmar o envio, ele abre o WhatsApp.
 
-    Em vez de usar um "pixel" (imagem), vamos fazer o que o Google Forms *realmente* espera: um envio de formulário (`POST`) de verdade.
+        -----
 
-    **Como funciona:**
+        ### ✅ Passo 1: Configurar o Cenário no Make.com
 
-    1.  Vamos criar um `iframe` (uma janela de navegador invisível) na sua página.
-    2.  Quando o usuário clicar em "Enviar", vamos criar um *segundo formulário*, também invisível.
-    3.  Vamos preencher esse formulário invisível com os dados do usuário (`nome`, `whatsapp`, etc.) e os `entrys` do Google.
-    4.  Vamos mandar esse formulário ser enviado **dentro do `iframe` invisível**.
-    5.  O `iframe` vai enviar os dados para o Google e vai ser redirecionado para a página de "Obrigado" do Google (tudo isso sem o usuário ver).
-    6.  Sua página principal **nunca sai do lugar**.
-    7.  Como a página principal não foi recarregada, nosso script continua rodando e pode, com segurança, redirecionar o usuário para o WhatsApp.
+        Você já deve conhecer este processo:
 
-    Isso é à prova de falhas.
+        1.  Vá ao **Make.com** e crie um **Novo Cenário**.
+        2.  Adicione um módulo **"Webhooks"** (o roxo) e escolha **"Custom webhook"**.
+        3.  Clique em "Add", dê um nome (ex: "Leads Landing Page") e salve.
+        4.  **Copie a URL do webhook** que ele gerou. (Guarde-a, você vai usar no Passo 3).
+        5.  Clique em **"Run once"** (Executar uma vez) para que o webhook fique "escutando".
 
-    -----
+        *Não feche esta janela\!*
 
-    ### ✅ Instruções (Duas Mudanças no `modal.js`)
+        -----
 
-    Você só precisa editar o arquivo `modal.js`.
+        ### ✅ Passo 2: "Ensinar" o Webhook (Envio de Teste)
 
-    #### Passo 1: Adicionar a Criação do `iframe`
+        Agora, precisamos enviar dados de teste para o Make.com saber o que esperar.
 
-    Na função `createModal()`, logo após adicionar o HTML do modal ao `document.body`, adicione o código que cria o `iframe`.
+        1.  Abra seu `index.html` (ou onde você chama `createModal`).
+        2.  **Temporariamente**, cole a URL do Make.com no lugar da URL do Google Forms:
+            ```javascript
+            // ...
+            // Configuração do Google Forms
+            googleFormURL: 'COLE_A_URL_DO_MAKE_WEBHOOK_AQUI', // <--- TROQUE AQUI
+            // ...
+            ```
+        3.  **Abra o seu site** (ex: `localhost` ou `vercel.app`) e **envie o formulário** uma vez com dados de teste.
+        4.  Volte para a janela do Make.com. Você verá um "OK" (uma bolha verde) no módulo Webhook, indicando que ele recebeu os dados.
 
-    **Encontre esta parte no `modal.js`:**
+        -----
 
-    ```javascript
-    // ... (dentro de createModal())
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-        
-        // Registra a instância globalmente para acesso pelos event handlers
-    // ...
-    ```
+        ### ✅ Passo 3: Concluir o Cenário no Make.com
 
-    **E adicione este bloco de código logo abaixo:**
+        1.  Agora que o Make.com sabe quais dados esperar (`nomeCompleto`, `whatsapp`, `cidade`), adicione um segundo módulo:
+        2.  Clique no "+" e adicione **"Google Sheets"**.
+        3.  Escolha a ação **"Add a Row"**.
+        4.  Conecte sua conta do Google, selecione a Planilha ("LeadsCampanhaNatal") e a Página ("Leads").
+        5.  Mapeie os campos:
+            * **Coluna Nome Completo:** `1. nomeCompleto` (do webhook)
+            * **Coluna WhatsApp:** `1. whatsapp` (do webhook)
+            * **Coluna Cidade:** `1. cidade` (do webhook)
+        6.  Dê "OK", salve o cenário e **ative-o** (no botão "Scheduling" ou "Ativar" no canto).
 
-    ```javascript
-    // ... (dentro de createModal())
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        O backend está pronto. Agora, a mudança final no front-end.
 
-        // --- ADICIONE A PARTIR DAQUI ---
-        // Cria o iframe oculto que será o alvo do envio do Google Forms
-        // Isso garante que o envio não interrompa a página principal.
-        if (!document.getElementById('googleFormsSubmitFrame')) {
-        const iframe = document.createElement('iframe');
-        iframe.id = 'googleFormsSubmitFrame';
-        iframe.name = 'googleFormsSubmitFrame'; // 'name' é crucial para o 'target' do form
-        iframe.style.display = 'none';
-        iframe.addEventListener('load', () => {
-            // Opcional: Log para saber quando o iframe terminou de carregar
-            console.log('✅ Iframe carregou (envio ao Google concluído)');
-        });
-        document.body.appendChild(iframe);
+        -----
+
+        ### ✅ Passo 4: Mudar o `modal.js` para usar `Fetch` (A Solução Definitiva)
+
+        Este é o passo mais importante. Vamos mudar seu `modal.js` para que ele envie os dados via `fetch` (o método moderno) e não mais por gambiarras.
+
+        1.  Abra seu `modal.js`.
+        2.  **Substitua** a função `handleSubmit` inteira pela versão `async` abaixo.
+        3.  **Substitua** a função `redirectToWhatsApp` inteira pela versão `async` abaixo.
+
+        <!-- end list -->
+
+        ```javascript
+        // EM MODAL.JS
+
+        // SUBSTITUA SEU HANDLE SUBMIT POR ESTE:
+        async handleSubmit() {
+            const form = document.getElementById(`${this.modalId}-form`);
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            console.log('Dados do formulário:', data);
+
+            // Enviar evento de Lead para o Meta Pixel
+            if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead', {
+                content_name: 'Natal Pago pelo Sol',
+                content_category: 'Energia Solar',
+                value: 0.00,
+                currency: 'BRL'
+            });
+            }
+
+            try {
+            // Tenta enviar os dados e ESPERA (await) a conclusão
+            await this.sendDataToWebhook(data);
+            console.log('✅ Sucesso: Dados enviados ao webhook ANTES do redirecionamento.');
+
+            // Só executa se o "await" acima funcionar
+            if (this.options.whatsappGroupURL) {
+                console.log('🚀 Abrindo WhatsApp em nova aba...');
+                const newTab = window.open(this.options.whatsappGroupURL, '_blank');
+                if (newTab) {
+                newTab.focus();
+                } else {
+                console.warn('⚠️ O Pop-up do WhatsApp foi bloqueado pelo navegador.');
+                }
+            }
+
+            } catch (error) {
+            console.error('❌ ERRO CRÍTICO no envio do webhook:', error);
+            // Opcional: mostrar um erro para o usuário
+            // Mesmo com erro, ainda tenta redirecionar para o WhatsApp
+            if (this.options.whatsappGroupURL) {
+                window.open(this.options.whatsappGroupURL, '_blank');
+            }
+            }
+
+            this.close();
+            form.reset();
         }
-        // --- ADICIONE ATÉ AQUI ---
-        
-        // Registra a instância globalmente para acesso pelos event handlers
-    // ...
-    ```
 
-    -----
+        // ADICIONE ESTA NOVA FUNÇÃO (sendDataToWebhook)
+        // (Pode substituir a antiga 'redirectToWhatsApp' por ela)
+        async sendDataToWebhook(data) {
+            // A URL do webhook agora é a única que importa
+            const webhookURL = this.options.googleFormURL; // Sim, vamos manter o nome da opção
 
-    #### Passo 2: Substituir a Função `redirectToWhatsApp`
+            if (!webhookURL) {
+            console.error('❌ URL do Webhook (googleFormURL) não definida!');
+            throw new Error('Webhook URL not set');
+            }
 
-    Agora, substitua **toda** a sua função `redirectToWhatsApp` por esta nova versão. A versão antiga (com `new Image()`) será descartada.
+            console.log(`🚀 Enviando dados para: ${webhookURL}`);
 
-    ```javascript
-    // COLE ESTA NOVA FUNÇÃO SUBSTITUINDO A ANTIGA
-    redirectToWhatsApp(data) {
-        const entryMap = this.options.googleFormEntryMap;
-        const baseURL = this.options.googleFormURL;
+            // Isso é o que envia os dados.
+            // O 'await' faz o JS parar e esperar a resposta.
+            const response = await fetch(webhookURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            });
 
-        console.log('🔍 DIAGNÓSTICO - redirectToWhatsApp (MÉTODO IFRAME POST)');
-        console.log('📋 Dados recebidos:', data);
-        console.log('🗺️ Entry Map:', entryMap);
-        console.log('🌐 Base URL:', baseURL);
+            // Se o Make.com der erro (fora do ar, etc.), isso vai falhar
+            if (!response.ok) {
+            console.error('Falha no envio do webhook', await response.text());
+            throw new Error('Webhook send failed');
+            }
 
-        // 1. Se o mapa de entrys e a URL existirem, envia para o Google Forms
-        if (entryMap && baseURL) {
-        // Cria um formulário dinâmico e invisível
-        const dynamicForm = document.createElement('form');
-        dynamicForm.action = baseURL; // A URL .../formResponse
-        dynamicForm.method = 'POST';
-        dynamicForm.target = 'googleFormsSubmitFrame'; // <--- A MÁGICA ACONTECE AQUI
-        dynamicForm.style.display = 'none';
+            // Se chegou aqui, o Make.com recebeu os dados (HTTP 200 OK)
+            return response;
+        }
+        ```
 
-        // 2. Cria inputs ocultos para cada dado mapeado
-        for (const key in entryMap) {
-            if (data[key]) {
-            const entryCode = entryMap[key];
-            const value = data[key];
+        -----
 
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = entryCode; // Ex: 'entry.155509499'
-            input.value = value;
-            dynamicForm.appendChild(input);
+        ### ✅ Passo 5: Atualizar a Chamada no `index.html`
+
+        No seu `index.html`, você não precisa mais do `googleFormEntryMap`. Você só precisa da URL do webhook (que você já colou lá).
+
+        ```javascript
+        // EM INDEX.HTML
+
+            const natalModal = createModal({
+            id: 'natalModal',
+            title: '🎄 Garanta seu Natal Pago pelo Sol',
+            // ...
             
-            console.log(`✅ Mapeado para POST: ${input.name} = "${input.value}"`);
-            } else {
-            console.warn(`⚠️ Campo "${key}" não encontrado nos dados`);
-            }
-        }
+            // AQUI VAI A URL DO WEBHOOK DO MAKE.COM
+            googleFormURL: 'https://hook.us1.make.com/SUA_URL_UNICA_AQUI',
+            
+            // NÃO PRECISA MAIS DISSO:
+            // googleFormEntryMap: { ... }, 
+            
+            fields: [
+                // ... seus campos (nomeCompleto, whatsapp, cidade)
+            ],
+            submitText: '👍 Entrar no grupo e garantir minha condição',
+            whatsappGroupURL: 'https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga'
+            });
+        ```
 
-        // 3. Adiciona o formulário à página, envia e remove
-        document.body.appendChild(dynamicForm);
-        dynamicForm.submit();
-        document.body.removeChild(dynamicForm);
-        
-        console.log('🚀 Formulário POST enviado para o iframe oculto.');
-
-        } else {
-        console.error('❌ Configuração do Google Forms incompleta!');
-        }
-        
-        // 4. ABRE O WHATSAPP EM NOVA ABA (AINDA COM ATRASO POR SEGURANÇA)
-        if (this.options.whatsappGroupURL) {
-        console.log(`⏳ Atrasando redirecionamento para o WhatsApp em 500ms...`);
-        
-        // O atraso agora garante que o 'form.submit()' teve tempo de disparar
-        setTimeout(() => {
-            const newTab = window.open(this.options.whatsappGroupURL, '_blank');
-            if (newTab) {
-            newTab.focus(); // Foca na nova aba
-            console.log('✅ WhatsApp aberto em nova aba e focado');
-            } else {
-            console.warn('⚠️ O Pop-up do WhatsApp foi bloqueado pelo navegador.');
-            }
-        }, 500); // 500ms é mais que suficiente
-        }
-    }
-    ```
-
-    -----
-
-    Isso resolve o problema de vez. O envio do formulário agora é um `POST` real, que é o que o Google Forms espera, e ele acontece de forma isolada no `iframe`, sem brigar com o redirecionamento do WhatsApp.
-
-    PS: É uma situação chata essa do seu App Script, mas esse método do `iframe` é a forma padrão de contornar isso 100% no front-end, de graça.
+        Pronto. Esta é a solução definitiva, profissional e gratuita que resolve a condição de corrida e usa uma ferramenta que você já conhece (Make.com).
