@@ -82,27 +82,27 @@ body {
 
 /* immediate sibling spacing to avoid content hidden under fixed header on mobile */
 .lp-header + .blue-hero {
-	margin-top: 90px; /* header height ajustado */
+	margin-top: 60px; /* Reduzido de 90px para 60px */
 }
 
 .Rectangle10 {
 	width: 100%;
 	max-width: none; /* full width para preencher toda a tela */
 	margin: 0;
-	height: 90px; /* altura aumentada para melhor espaçamento */
+	height: 60px; /* Reduzido de 90px para 60px */
 	background: var(--brand-blue);
 	border-radius: 0;
 	position: relative;
 	display: flex;
 	align-items: flex-end; /* alinhar logo e CTA no fundo (evita câmera do iPhone) */
 	justify-content: space-between;
-	padding: 0 20px 12px; /* padding para logo e CTA não colarem nas bordas */
+	padding: 0 15px 8px; /* Reduzido padding */
 	box-sizing: border-box;
 }
 
 .Vector img {
-	width: 79px;
-	height: 38px;
+	width: 65px; /* Reduzido de 79px */
+	height: 31px; /* Reduzido de 38px */
 	display: block;
 }
 
@@ -152,42 +152,42 @@ body {
    HEADLINE SECTION
 ======================================== */
 .lp-headline {
-	padding: 30px 0 20px;
+	padding: 15px 0 10px; /* Reduzido de 30px 0 20px */
 }
 
 .InstaleSeuSistemaDeEnergiaSolarAgoraEGanhe {
 	width: 100%;
 	max-width: none; /* remover limite para preencher a tela */
 	margin: 0 auto;
-	padding: 0 20px;
+	padding: 0 15px; /* Reduzido de 20px */
 	text-align: center;
 	box-sizing: border-box;
 }
 
 .headline-bold {
 	color: rgba(255, 254.99, 254.98, 0.90);
-	font-size: 34px;
+	font-size: 20px; /* Reduzido de 24px */
 	font-family: Poppins;
 	font-weight: 700;
-	line-height: 45px;
+	line-height: 26px; /* Ajustado proporcionalmente */
 	word-wrap: break-word;
 }
 
 .headline-space {
 	color: rgba(255, 254.99, 254.98, 0.90);
-	font-size: 40px;
+	font-size: 20px; /* Reduzido de 24px */
 	font-family: Poppins;
 	font-weight: 400;
-	line-height: 45px;
+	line-height: 26px; /* Ajustado proporcionalmente */
 	word-wrap: break-word;
 }
 
 .headline-normal {
 	color: rgba(255, 254.99, 254.98, 0.90);
-	font-size: 27px;
+	font-size: 18px; /* Reduzido de 22px */
 	font-family: Poppins;
 	font-weight: 400;
-	line-height: 45px;
+	line-height: 26px; /* Ajustado proporcionalmente */
 	word-wrap: break-word;
 }
 
@@ -196,14 +196,17 @@ body {
    VIDEO SECTION
 ======================================== */
 .lp-video {
-	padding: 20px 0 30px;
+	padding: 10px 0 15px; /* Reduzido de 20px 0 30px */
 }
 
+/* ========================================
+   5. VIDEO SECTION
+======================================== */
 .VSL {
 	width: 100%;
-	max-width: none;
+	max-width: 100%; /* Mobile: ocupa largura disponível */
 	margin: 0 auto;
-	padding: 0 20px;
+	padding: 0 15px; /* Reduzido de 20px */
 	box-sizing: border-box;
 	display: flex;
 	justify-content: center;
@@ -212,9 +215,12 @@ body {
 
 .video-wrapper {
 	position: relative;
-	padding-top: 56.25%;
 	width: 100%;
-	max-width: 100%;
+	max-width: 100%; /* LARGURA TOTAL */
+	padding-top: 56.25%; /* FORÇADO 16:9 HORIZONTAL */
+	margin: 0 auto;
+	overflow: hidden;
+	border-radius: 8px; /* Reduzido de 12px */
 }
 
 .video-wrapper iframe {
@@ -222,6 +228,9 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain; /* Mantém proporção, sem cortar - igual YouTube */
 }
 
 
@@ -229,35 +238,35 @@ body {
    PROMO TEXT SECTION
 ======================================== */
 .lp-promo {
-	padding: 20px 0 30px;
+	padding: 10px 0 15px; /* Reduzido de 20px 0 30px */
 }
 
 .RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerramosOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59 {
 	width: 100%;
 	max-width: none;
 	margin: 0 auto;
-	padding: 0 20px;
+	padding: 0 15px; /* Reduzido de 20px */
 	box-sizing: border-box;
 	text-align: center;
 }
 
 .promo-text-normal {
 	color: white;
-	font-size: 16px;
+	font-size: 14px; /* Reduzido de 16px */
 	font-family: Poppins;
 	font-weight: 400;
-	line-height: 24px;
-	margin-bottom: 8px;
+	line-height: 20px; /* Reduzido de 24px */
+	margin-bottom: 6px; /* Reduzido de 8px */
 	text-align: center;
 }
 
 .promo-text-bold {
 	color: white;
-	font-size: 16px;
+	font-size: 14px; /* Reduzido de 16px */
 	font-family: Poppins;
 	font-weight: 700;
-	line-height: 24px;
-	margin-bottom: 20px;
+	line-height: 20px; /* Reduzido de 24px */
+	margin-bottom: 15px; /* Reduzido de 20px */
 	text-align: center;
 }
 
@@ -269,11 +278,11 @@ body {
 	display: block;
 	width: 100%;
 	max-width: 100%;
-	margin: 24px auto 0 auto;
-	padding: 20px 16px;
+	margin: 15px auto 0 auto; /* Reduzido de 24px */
+	padding: 14px 12px; /* Reduzido de 20px 16px */
 	background: linear-gradient(180deg, #FFD700 0%, #FFC700 100%);
 	box-shadow: 0 6px 24px 0 #FFD700AA, 0 2px 12px 0 #0004, inset 0 1px 0 0 #FFED4E88;
-	border-radius: 12px;
+	border-radius: 10px; /* Reduzido de 12px */
 	border: 2px solid #FFE55C;
 	outline: none;
 	cursor: pointer;
@@ -286,10 +295,10 @@ body {
 
 .cta-gold-text {
 	color: #032137;
-	font-size: 1.2rem;
+	font-size: 1rem; /* Reduzido de 1.2rem */
 	font-family: Poppins, Arial, sans-serif;
 	font-weight: 800;
-	line-height: 1.4;
+	line-height: 1.3; /* Reduzido de 1.4 */
 	letter-spacing: 0.02em;
 	word-break: break-word;
 	text-align: center;
@@ -626,6 +635,8 @@ body {
 .benefit-icon-circle img {
 	width: 20px;
 	height: 20px;
+	display: block;
+	object-fit: contain;
 }
 
 .benefit-icon-arrow {
@@ -1097,7 +1108,7 @@ body {
 .video-wrapper {
 	position: relative;
 	width: 100%;
-	padding-top: 177.78%; /* Aspect ratio 9:16 (vertical video) */
+	padding-top: 56.25%; /* Aspect ratio 9:16 (vertical video) */
 	overflow: hidden;
 }
 
@@ -2167,13 +2178,13 @@ body {
 	}
 
 	.VSL {
-		max-width: 480px; /* Reduz largura para diminuir altura vertical */
+		max-width: 450px; /* Desktop: vídeo vertical compacto */
 		margin: 0 auto;
 	}
 
 	.video-wrapper {
-		max-width: 480px; /* Wrapper também reduzido */
-		padding-top: 56.25%; /* Mantém aspect ratio 16:9 */
+		max-width: 100%; /* Desktop: largura total */
+		padding-top: 56.25%; /* FORÇADO 16:9 HORIZONTAL */
 	}
 
 	.lp-promo {
