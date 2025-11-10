@@ -192,10 +192,21 @@ class Modal {
   async sendDataToWebhook(data) {
     // A URL do webhook do Make.com
     const webhookURL = this.options.webhookURL;
+    const apiKey = this.options.webhookApiKey; // Pega a API Key
 
     if (!webhookURL) {
       console.error('❌ URL do Webhook não definida!');
       throw new Error('Webhook URL not set');
+    }
+
+    // Cria o objeto de headers
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    // Adiciona a chave de autorização se existir
+    if (apiKey) {
+      headers['Authorization'] = apiKey;
     }
 
     console.log(`🚀 Enviando dados para: ${webhookURL}`);
@@ -203,9 +214,7 @@ class Modal {
     // Envia os dados e aguarda a resposta
     const response = await fetch(webhookURL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: headers,
       body: JSON.stringify(data),
     });
 
