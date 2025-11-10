@@ -1,5 +1,5 @@
 # **Descrição**
-   O problema agora é que ficaram somente as molduras branccas, sem os icones. Mas isso só quando vai para a vercel. Outra coisa que o cliente  ajustou o vsl.
+   Estamos com um problema grande de desempenho no mobile, precisamos resolver isso. 
 
 # **O que usar**
 
@@ -7,160 +7,64 @@
 
 ## Instruções do gemini
 
+   Você está **100% correto** e peço desculpas por isso. Foi um erro na minha instrução anterior.
 
-   Você está com dois problemas: um de CSS (os vídeos verticais) e um de deploy (os ícones).
+Você tem toda a razão: o VSL principal (linha 47) é o item mais importante da sua página (o `Largest Contentful Paint` ou LCP) e ele **não** deve ter `loading="lazy"`.
 
-   -----
+O objetivo não é *atrasar* o seu VSL, é fazer com que ele carregue *mais rápido*. O seu LCP de 28.1 segundos acontece porque o VSL está "brigando" por recursos com todos os outros elementos da página (outros 3 vídeos, 15+ imagens e scripts).
 
-   ### 1\. 🎬 Corrigindo os Vídeos Verticais ("Entenda Melhor")
+O plano de ação que dei (limpar o `<head>`, mover o Pixel) serve exatamente para *liberar* os recursos do navegador para que ele possa focar **apenas** no seu VSL.
 
-   O problema é que você está usando a mesma classe `.video-wrapper` (que é 16:9 horizontal) para todos os vídeos. Precisamos criar uma classe nova para os vídeos que são 9:16 (verticais).
-
-   #### Passo 1: Adicione este CSS ao seu `main.css`
-
-   Abra o arquivo `LandingPageOlimpo/main.css` e cole o código abaixo no final dele. Isso vai criar a "moldura" vertical.
-
-   ```css
-   /*
-   ========================================
-      CORREÇÃO VÍDEO VERTICAL (9:16)
-   ========================================
-   */
-   .video-wrapper-vertical {
-   padding-top: 177.78%; /* Proporção 9:16 (vídeo vertical) */
-   }
-   ```
-
-   #### Passo 2: Altere o HTML no `index.html`
-
-   Agora, no `LandingPageOlimpo/index.html`, você precisa adicionar essa nova classe aos `div`s dos três vídeos de depoimento.
-
-   **Procure pela linha 351 (Depoimento Vilson):**
-
-   ```html
-   <div class="video-wrapper">
-   <div class="video-wrapper video-wrapper-vertical">
-   ```
-
-   **Procure pela linha 360 (Depoimento Isaias):**
-
-   ```html
-   <div class="video-wrapper">
-   <div class="video-wrapper video-wrapper-vertical">
-   ```
-
-   **Procure pela linha 369 (Depoimento Geraldo):**
-
-   ```html
-   <div class="video-wrapper">
-   <div class="video-wrapper video-wrapper-vertical">
-   ```
-
-   Isso fará com que os vídeos de depoimento se ajustem à proporção vertical 9:16, eliminando as bordas pretas, enquanto o seu VSL principal (na linha 100) continuará 16:9 horizontal.
-
-   -----
-
-   ### 2\. 🖼️ Corrigindo os Ícones (Vercel vs. Local)
-   Você está **100% correto**. Peço desculpas por isso.
-
-A imagem que você enviou (`image_d25578.png`) mostra que os arquivos têm 1KB e 2KB. Eles **não estão vazios**.
-
-Isso me dá o diagnóstico definitivo. O problema não é o arquivo, é o **MIME Type**.
-
-### 💡 O Diagnóstico Correto
-
-O problema é que o servidor (Vercel) está entregando seus arquivos `.svg` para o navegador com o `Content-Type` (Tipo de Conteúdo) errado.
-
-A sua própria imagem dá a pista:
-
-  * **Tipo:** `Microsoft Edge HT...`
-
-Seu computador acha que esses arquivos são "documentos de HTML". A Vercel provavelmente está fazendo a mesma confusão: ela está servindo seus ícones como `text/html` em vez de `image/svg+xml`.
-
-Quando o navegador recebe um arquivo de imagem que ele acha que é um texto, ele não consegue renderizar a imagem, e o resultado é exatamente o que você descreveu: **"somente as molduras brancas"** (o `<img>` tag existe, mas a fonte da imagem está corrompida).
+Aqui está o plano de ação **corrigido** para os vídeos, que é o que você precisa.
 
 -----
 
-### ✅ A Solução (no `vercel.json`)
+### ✅ Plano de Ação Corrigido (Foco no VSL)
 
-   Para corrigir isso, precisamos forçar a Vercel a sempre servir arquivos `.svg` com o tipo de conteúdo correto.
+#### 1\. Vídeo Principal (VSL - Linha 47): Prioridade Máxima
 
-   1.  Abra o seu arquivo `LandingPageOlimpo/vercel.json`.
-   2.  Adicione o novo bloco de código (para `*.svg`) dentro da sua lista de `headers`.
+Mantenha exatamente como está no seu `index.html` original. O `fetchpriority="high"` está **correto** para o seu elemento LCP.
 
-   **O seu `vercel.json` deve ficar assim:**
+  * **Arquivo:** `index.html`
+  * **Linha:** 47
+  * **Ação:** **NÃO ALTERE ESTA LINHA.** Mantenha o `fetchpriority="high"` e **NÃO** adicione `loading="lazy"`.
+    ```html
+    <div class="video-wrapper"><iframe id="panda-99a724cb..." src="..." ... fetchpriority="high"></iframe></div>
+    ```
 
-   ```json
-   {
-   "version": 2,
-   "headers": [
-      {
-         "source": "/(.*).css",
-         "headers": [
-         {
-            "key": "Content-Type",
-            "value": "text/css; charset=utf-8"
-         }
-         ]
-      },
-      {
-         "source": "/(.*).js",
-         "headers": [
-         {
-            "key": "Content-Type",
-            "value": "application/javascript; charset=utf-8"
-         }
-         ]
-      },
+#### 2\. Vídeos Secundários (Depoimentos): Atrasar Carregamento
 
-      
-      "--- ✅ ADICIONE ESTE BLOCO ABAIXO ---",
-      {
-         "source": "/(.*).svg",
-         "headers": [
-         {
-            "key": "Content-Type",
-            "value": "image/svg+xml"
-         }
-         ]
-      },
-      "--- ✅ ATÉ AQUI ---",
+Estes são os vídeos que estão "abaixo da dobra" (fora da tela inicial) e que *estão* roubando os recursos do seu VSL principal. É aqui que o `loading="lazy"` entra.
 
-      
-      {
-         "source": "/(.*)",
-         "headers": [
-         {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-         },
-         {
-            "key": "X-Frame-Options",
-            "value": "SAMEORIGIN"
-         },
-         {
-            "key": "X-XSS-Protection",
-            "value": "1; mode=block"
-         }
-         ]
-      },
-      {
-         "source": "/images/(.*)",
-         "headers": [
-         {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-         }
-         ]
-      }
-   ]
-   }
-   ```
+  * **Arquivo:** `index.html`
 
-   Ao adicionar essa regra, você está dizendo à Vercel: "Qualquer arquivo que termine com `.svg` deve ser entregue como uma imagem (`image/svg+xml`), sem exceção."
+  * **Linha 352 (Depoimento 1):**
 
-   Faça o deploy com essa alteração no `vercel.json` e os ícones aparecerão.
+      * **Mude de:** `<iframe id="panda-427034d3..." ... fetchpriority="high"></iframe>`
+      * **Para:** `<iframe loading="lazy" id="panda-427034d3..." ...></iframe>` (Adicione `loading="lazy"` e **remova** `fetchpriority="high"`)
 
-   -----
+  * **Linha 361 (Depoimento 2):**
 
-   **PS:** A outra correção que mencionei (para os vídeos verticais, adicionando a classe `.video-wrapper-vertical`) ainda é necessária para consertar a proporção dos vídeos de depoimento.
+      * **Mude de:** `<iframe id="panda-349689d4..." ... fetchpriority="high"></iframe>`
+      * **Para:** `<iframe loading="lazy" id="panda-349689d4..." ...></iframe>` (Adicione `loading="lazy"` e **remova** `fetchpriority="high"`)
+
+  * **Linha 370 (Depoimento 3):**
+
+      * **Mude de:** `<iframe id="panda-718ddd12..." ... fetchpriority="high"></iframe>`
+      * **Para:** `<iframe loading="lazy" id="panda-718ddd12..." ...></iframe>` (Adicione `loading="lazy"` e **remova** `fetchpriority="high"`)
+
+-----
+
+### Resumo do Plano (Agora 100% Correto)
+
+Ao fazer isso, você está dizendo ao navegador:
+
+1.  **Prioridade Total:** Carregue o VSL principal (linha 47) AGORA.
+2.  **Ignorar por Enquanto:** Ignore os 3 vídeos de depoimento, o Pixel do Meta e todas as imagens com `loading="lazy"`.
+
+Para que isso funcione, os outros passos do plano de ação ainda são **essenciais**:
+
+1.  **Adicionar `loading="lazy"` a TODAS as imagens "abaixo da dobra"** (Contas de Luz, Imagem "Pode Confiar", ícones, etc.). Elas também estão competindo por recursos.
+2.  **Comprimir e Converter** essas imagens para `.webp` para reduzir o tamanho delas, como o PageSpeed pediu.
+
+Seu VSL só vai carregar rápido se ele não tiver que competir com 3 vídeos e 15 imagens desnecessárias no carregamento inicial.
