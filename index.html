@@ -19,7 +19,6 @@
   <link rel="dns-prefetch" href="https://player-vz-64ebbd5f-ca9.tv.pandavideo.com.br">
   <link rel="dns-prefetch" href="https://vz-64ebbd5f-ca9.b-cdn.net">
   
-  <link rel="stylesheet" href="modal.css">
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -28,7 +27,7 @@
       <div data-svg-wrapper data-layer="Vector" class="Vector">
         <img src="images/LOGO.svg" alt="Logo Olimpo">
       </div>
-      <div data-layer="CTA" class="cta-button" onclick="natalModal.open()">
+      <div data-layer="CTA" class="cta-button" onclick="window.open('https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga', '_blank')">
         <div data-layer="Quero meu Natal pago pelo sol!" class="QueroMeuNatalPagoPeloSol">☀️ Quero meu Natal pago pelo sol!</div>
       </div>
     </div>
@@ -47,7 +46,7 @@
     <section class="lp-section lp-promo">
       <div data-layer="Receba sua simulação gratuita" class="RecebaSuaSimulaOGratuitaEVejaComoAEnergiaSolarPodeSerOMelhorPresenteDeNatalParaSuaCasaEncerrandoOAnoComAMelhorCondiODaOlimpoEnergiaVLidoSAt15DeNovembroS23h59">
         <div class="promo-text-bold">Encerrando o ano com a melhor condição da Olimpo Energia, válido só até 15 de novembro, às 23h59.</div>
-        <button type="button" data-layer="CTA" class="cta-gold Cta" onclick="natalModal.open()">
+        <button type="button" data-layer="CTA" class="cta-gold Cta" onclick="window.open('https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga', '_blank')">
           <span class="cta-gold-text">🎄 Quero meu natal pago pelo sol</span>
         </button>
         <div data-layer="TIMER" class="Timer">
@@ -201,7 +200,7 @@
             </div>
 
             <!-- CTA Final -->
-            <button type="button" class="cta-final" onclick="natalModal.open()">
+            <button type="button" class="cta-final" onclick="window.open('https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga', '_blank')">
               <span class="cta-emoji cta-emoji-left">👉</span>
               <span class="cta-final-text">Quero meu natal pago pelo sol</span>
               <span class="cta-emoji cta-emoji-right">👈</span>
@@ -390,7 +389,7 @@
         </div>
 
         <!-- CTA Button -->
-        <button type="button" class="cta-confiar" onclick="natalModal.open()">
+        <button type="button" class="cta-confiar" onclick="window.open('https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga', '_blank')">
           <span class="cta-emoji-confiar">👉</span>
           <span class="cta-confiar-text">Quero meu natal pago pelo sol</span>
           <span class="cta-emoji-confiar">👈</span>
@@ -575,10 +574,10 @@
             <p class="cta-box-description">Faça uma simulação gratuita e descubra quanto você pode economizar por mês com energia solar. Sem compromisso!</p>
             
             <div class="cta-box-buttons">
-              <button type="button" class="cta-primary-solar" onclick="natalModal.open()">
+              <button type="button" class="cta-primary-solar" onclick="window.open('https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga', '_blank')">
                 Fazer simulação grátis
               </button>
-              <button type="button" class="cta-secondary-solar" onclick="natalModal.open()">
+              <button type="button" class="cta-secondary-solar" onclick="window.open('https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga', '_blank')">
                 Falar com especialista
               </button>
             </div>
@@ -661,7 +660,7 @@
         <!-- CTA Footer -->
         <div class="duvidas-footer">
           <p class="duvidas-footer-text">Ainda tem dúvidas? Fale com nossos especialistas!</p>
-          <button class="cta-especialista" onclick="natalModal.open()">
+          <button class="cta-especialista" onclick="window.open('https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga', '_blank')">
             Falar com especialista
           </button>
         </div>
@@ -716,46 +715,7 @@
       </div>
     </footer>
 
-  <script src="modal.js"></script>
   <script>
-    const natalModal = createModal({
-      id: 'natalModal',
-      title: '🎄 Garanta seu Natal Pago pelo Sol',
-      description: 'Preencha seus dados e receba sua simulação gratuita. Após o envio, você será redirecionado para o grupo exclusivo no WhatsApp, onde revelaremos a condição especial da Olimpo Energia.',
-      
-      // URL do Webhook do Make.com
-      webhookURL: 'https://hook.us2.make.com/qou9qw1wx7ajg8hpobin1kshbk614f8j',
-      
-      // API Key para autenticação do webhook
-      webhookApiKey: "ZFc6xlT^^x1Mq#Z£@eX'OJIy|60{>\"H*@-0s-c<;&}z2=zM:'H",
-      
-      fields: [
-        {
-          name: 'nomeCompleto',
-          label: 'Nome completo',
-          type: 'text',
-          placeholder: 'Seu nome completo',
-          required: true
-        },
-        {
-          name: 'whatsapp',
-          label: 'WhatsApp (com DDD)',
-          type: 'tel',
-          placeholder: '(67) 99999-9999',
-          required: true
-        },
-        {
-          name: 'cidade',
-          label: 'Cidade',
-          type: 'text',
-          placeholder: 'Campo Grande',
-          required: true
-        }
-      ],
-      submitText: '👍 Entrar no grupo e garantir minha condição',
-      whatsappGroupURL: 'https://chat.whatsapp.com/LJB6bLEHDSlF2GOdnjPjga'
-    });
-
     // ===================================
     // FAQ ACCORDION
     // ===================================
@@ -826,4 +786,5 @@
 
 </body>
 </html>
+
 

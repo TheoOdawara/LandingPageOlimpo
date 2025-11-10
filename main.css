@@ -106,35 +106,24 @@ body {
 	display: block;
 }
 
-@media (min-width: 481px) {
-	/* Desktop: header becomes part of flow and centered, same visual size */
-	.lp-header {
-		position: static;
-		background: var(--brand-blue);
-		padding: 16px 0;
-	}
-
-	.lp-header + .blue-hero {
-		margin-top: 0; /* remove o espaçamento pois header não é mais fixo */
-	}
-
-	.Rectangle10 {
-		max-width: 100%;
-		margin: 0 auto;
-		padding: 0 25px;
-		border-radius: 8px;
-		height: 80px;
-	}
-}
+/* Removido media query que tornava header static no desktop - header deve ser fixed sempre */
 
 .cta-button {
-	padding: 5px 15px;
+	padding: 5px 10px; /* Reduzido de 15px para 10px lateralmente */
 	background: white;
 	border-radius: 5px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	
+	/* Adiciona animação de pulsação */
+	animation: pulseGlow 2s ease-in-out infinite;
+	
+	/* Evita deslocamento durante o scale */
+	transform-origin: right center;
+	will-change: transform	;
+	backface-visibility: hidden;
 }
 
 .QueroMeuNatalPagoPeloSol {
@@ -274,15 +263,28 @@ body {
 /* ========================================
    CTA GOLD BUTTON
 ======================================== */
+
+/* Animação de Pulsação + Brilho */
+@keyframes pulseGlow {
+	0%, 100% {
+		transform: scale(1);
+		box-shadow: 0 15px 50px 0 rgba(255, 215, 0, 0.6), 0 5px 20px 0 rgba(255, 215, 0, 0.4), inset 0 1px 0 0 #FFED4E88;
+	}
+	50% {
+		transform: scale(1.08);
+		box-shadow: 0 25px 80px 0 rgba(255, 215, 0, 0.9), 0 10px 40px 0 rgba(255, 215, 0, 0.7), inset 0 1px 0 0 #FFED4E99;
+	}
+}
+
 .cta-gold {
 	display: block;
 	width: 100%;
-	max-width: 100%;
-	margin: 15px auto 0 auto; /* Reduzido de 24px */
-	padding: 14px 12px; /* Reduzido de 20px 16px */
+	max-width: 80%;
+	margin: 15px auto 0 auto;
+	padding: 14px 12px;
 	background: linear-gradient(180deg, #FFD700 0%, #FFC700 100%);
 	box-shadow: 0 6px 24px 0 #FFD700AA, 0 2px 12px 0 #0004, inset 0 1px 0 0 #FFED4E88;
-	border-radius: 10px; /* Reduzido de 12px */
+	border-radius: 10px;
 	border: 2px solid #FFE55C;
 	outline: none;
 	cursor: pointer;
@@ -291,6 +293,9 @@ body {
 	text-align: center;
 	-webkit-tap-highlight-color: transparent;
 	touch-action: manipulation;
+	
+	/* Adiciona animação de pulsação */
+	animation: pulseGlow 2s ease-in-out infinite;
 }
 
 .cta-gold-text {
@@ -886,6 +891,10 @@ body {
 	outline-offset: -2px;
 	border: none;
 	cursor: pointer;
+	
+	/* Adiciona animação de pulsação */
+	animation: pulseGlow 2s ease-in-out infinite;
+	
 	display: flex;
 	justify-content: space-between; /* Emojis nas laterais */
 	align-items: center;
@@ -1322,6 +1331,10 @@ body {
 	outline-offset: -2px;
 	border: none;
 	cursor: pointer;
+	
+	/* Adiciona animação de pulsação */
+	animation: pulseGlow 2s ease-in-out infinite;
+	
 	display: flex;
 	justify-content: space-between; /* Emojis nas laterais */
 	align-items: center;
@@ -1748,6 +1761,10 @@ body {
 	border-radius: 9999px;
 	border: none;
 	cursor: pointer;
+	
+	/* Adiciona animação de pulsação */
+	animation: pulseGlow 2s ease-in-out infinite;
+	
 	color: #032137;
 	font-size: 16px;
 	font-family: Poppins;
@@ -1795,6 +1812,10 @@ body {
 	outline-offset: -2.22px;
 	border: none;
 	cursor: pointer;
+	
+	/* Adiciona animação de pulsação */
+	animation: pulseGlow 2s ease-in-out infinite;
+	
 	color: #FFD700;
 	font-size: 16px;
 	font-family: Poppins;
@@ -1988,6 +2009,9 @@ body {
 	border-radius: 9999px;
 	border: none;
 	cursor: pointer;
+	
+	/* Adiciona animação de pulsação */
+	animation: pulseGlow 2s ease-in-out infinite;
 	color: white;
 	font-size: 16px;
 	font-family: Poppins;
@@ -2647,6 +2671,7 @@ body {
 		line-height: 22px;
 	}
 }
+
 
 
 
