@@ -180,6 +180,21 @@ body {
 	word-wrap: break-word;
 }
 
+.headline-subheadline {
+	width: 100%;
+	max-width: none;
+	margin: 15px auto 0;
+	padding: 0 15px;
+	text-align: center;
+	box-sizing: border-box;
+	color: var(--gold);
+	font-size: 16px;
+	font-family: Poppins;
+	font-weight: 600;
+	line-height: 24px;
+	word-wrap: break-word;
+}
+
 
 /* ========================================
    VIDEO SECTION
@@ -2205,6 +2220,12 @@ body {
 		max-width: none;
 	}
 
+	.headline-subheadline {
+		font-size: 18px;
+		line-height: 28px;
+		margin: 20px auto 0;
+	}
+
 	.lp-video {
 		padding: 30px 0;
 	}
@@ -2669,6 +2690,31 @@ body {
 	.footer-legal-text {
 		font-size: 15px;
 		line-height: 22px;
+	}
+}
+
+/* ========================================
+   DELAYED CONTENT - LAZY LOAD 60 SEGUNDOS
+======================================== */
+.delayed-content-hidden {
+	display: none;
+	opacity: 0;
+}
+
+.delayed-content-visible {
+	display: block;
+	opacity: 0;
+	animation: fadeInDelayedContent 0.8s ease-in forwards;
+}
+
+@keyframes fadeInDelayedContent {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
 
